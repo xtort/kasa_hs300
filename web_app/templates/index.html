@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="controls-bar">
+    <button class="btn btn-primary" id="btn-all-on">
+        <span class="icon">⚡</span> Turn All On
+    </button>
+    <button class="btn btn-secondary" id="btn-all-off">
+        <span class="icon">🔌</span> Turn All Off
+    </button>
+    <button class="btn btn-info" id="btn-refresh">
+        <span class="icon">🔄</span> Refresh
+    </button>
+</div>
+
+<div class="outlets-grid" id="outlets-grid">
+    <div class="loading-message">
+        <div class="spinner"></div>
+        <p>Loading outlets...</p>
+    </div>
+</div>
+
+<!-- Power Draw Modal -->
+<div id="power-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="power-modal-title">Power Draw</h2>
+        <div id="power-modal-body">
+            <div class="loading-message">
+                <div class="spinner"></div>
+                <p>Loading power data...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+        loadOutlets();
+        
+        // Refresh button
+        document.getElementById('btn-refresh').addEventListener('click', loadOutlets);
+        
+        // Turn all on/off buttons
+        document.getElementById('btn-all-on').addEventListener('click', function() {
+            toggleAllOutlets('on');
+        });
+        
+        document.getElementById('btn-all-off').addEventListener('click', function() {
+            toggleAllOutlets('off');
+        });
+        
+        // Modal close button
+        const modal = document.getElementById('power-modal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+    });
+</script>
+{% endblock %}
+
