@@ -185,7 +185,8 @@ class KasaPowerStripCLI:
                 print(f"Current:     {energy_info['current']:.3f} A")
             if 'power' in energy_info:
                 print(f"Power:       {energy_info['power']:.2f} W")
-            print(f"Total Energy: {energy_info['total']:.3f / 1000}  kWh")
+            if 'total' in energy_info:
+                print(f"Total Energy: {energy_info['total'] / 1000:.3f}  kWh")
             # if 'total' in energy_info:
             #     print(f"Total Energy: {energy_info['total']:.3f} kWh")
             
