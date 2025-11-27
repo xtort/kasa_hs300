@@ -27,7 +27,7 @@ except ImportError as e:
 class KasaPowerStripCLI:
     """CLI interface for controlling TP-Link HS300 Smart Power Strip."""
 
-    def __init__(self, ip_address: str = "192.168.2.3"):
+    def __init__(self, ip_address: str = "192.168.50.137"):
         """
         Initialize the CLI with the power strip IP address.
 
@@ -284,7 +284,7 @@ def main():
     )
     parser.add_argument(
         "--ip",
-        default="192.168.2.3",
+        default="192.168.50.137",
         help="IP address of the power strip (default: 192.168.2.3)"
     )
 

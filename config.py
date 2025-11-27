@@ -7,7 +7,7 @@ without changing the main application code.
 """
 
 # Power Strip Configuration
-POWER_STRIP_IP = "192.168.2.3"
+POWER_STRIP_IP = "192.168.50.137"
 POWER_STRIP_TIMEOUT = 2.0
 POWER_STRIP_PROTOCOL = "tcp"  # 'tcp' or 'udp'
 

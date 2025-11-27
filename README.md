@@ -295,4 +295,6 @@ For issues and questions:
 3. Open an issue on the project repository
 
 
-
+## To get IP address of HS300 on PEPWAVE
+ssh admin@192.168.50.1 -p 8822
+get clientlist
