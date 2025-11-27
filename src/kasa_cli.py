@@ -155,8 +155,52 @@ class KasaPowerStripCLI:
         print("\nOptions:")
         print("  on.  Turn outlet ON")
         print("  off. Turn outlet OFF")
+        print("  p.   Show power draw")
         print("  b.   Back to main menu")
         print("-" * 30)
+
+    def display_power_draw(self, outlet_num: int) -> bool:
+        """
+        Display power draw information for a specific outlet.
+
+        Args:
+            outlet_num: The outlet number to get power draw for
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            energy_info = self.power_strip.get_realtime_energy_info(plug_num=outlet_num)
+            outlet_name = self.outlet_names[outlet_num]
+            
+            print(f"\n{'='*50}")
+            print(f"Power Draw - {outlet_name} (Outlet {outlet_num})")
+            print(f"{'='*50}")
+            
+            # Display power information
+            # TP-Link Kasa devices typically return voltage, current, power, and total
+            if 'voltage' in energy_info:
+                print(f"Voltage:     {energy_info['voltage']:.2f} V")
+            if 'current' in energy_info:
+                print(f"Current:     {energy_info['current']:.3f} A")
+            if 'power' in energy_info:
+                print(f"Power:       {energy_info['power']:.2f} W")
+            if 'total' in energy_info:
+                print(f"Total Energy: {energy_info['total']:.3f} kWh")
+            
+            # Some devices may use different field names
+            if 'voltage_mv' in energy_info:
+                print(f"Voltage:     {energy_info['voltage_mv'] / 1000:.2f} V")
+            if 'current_ma' in energy_info:
+                print(f"Current:     {energy_info['current_ma'] / 1000:.3f} A")
+            if 'power_mw' in energy_info:
+                print(f"Power:       {energy_info['power_mw'] / 1000:.2f} W")
+            
+            print(f"{'='*50}\n")
+            return True
+        except Exception as e:
+            print(f"✗ Error getting power draw for outlet {outlet_num}: {e}")
+            return False
 
     def control_outlet(self, outlet_num: int, action: str) -> bool:
         """
@@ -266,6 +310,9 @@ class KasaPowerStripCLI:
                         time.sleep(1)  # Brief pause to show the action
                     else:
                         print("Failed to control outlet.")
+                elif choice == 'p':
+                    self.display_power_draw(outlet_num)
+                    input("\nPress Enter to continue...")
                 else:
                     print("Invalid choice. Please try again.")
 
