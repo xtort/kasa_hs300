@@ -189,7 +189,7 @@ class KasaPowerStripCLI:
                 print(f"Total Energy: {energy_info['total'] / 1000:.3f}  kWh")
             # if 'total' in energy_info:
             #     print(f"Total Energy: {energy_info['total']:.3f} kWh")
-            print(f"Total Energy: {energy_info['power'] / 1000:.3f} kWh")
+            
             
             # Some devices may use different field names
             if 'voltage_mv' in energy_info:
@@ -198,7 +198,8 @@ class KasaPowerStripCLI:
                 print(f"Current:     {energy_info['current_ma'] / 1000:.3f} A")
             if 'power_mw' in energy_info:
                 print(f"Power:       {energy_info['power_mw'] / 1000:.2f} W")
-            
+            print(f"Total Energy: {energy_info['power_mw'] / 1000:.3f} kWh")
+
             print(f"{'='*50}\n")
             return True
         except Exception as e:
