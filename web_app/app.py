@@ -82,6 +82,12 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/power-table')
+def power_table():
+    """Power table page showing all outlets' power draw."""
+    return render_template('power_table.html')
+
+
 @app.route('/api/outlets', methods=['GET'])
 def get_outlets():
     """API endpoint to get all outlet information."""
@@ -165,20 +171,61 @@ def get_all_power_draw():
         return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500
     
     try:
-        for outlet_num in range(1, 7):
-            energy_info = strip.get_realtime_energy_info(plug_num=outlet_num)
-            power_data = {}
-            if 'voltage' in energy_info:
-                power_data['voltage'] = round(energy_info['voltage'], 2)
-            if 'current' in energy_info:
-                power_data['current'] = round(energy_info['current'], 3)
-            if 'power' in energy_info:
-                power_data['power'] = round(energy_info['power'], 2)
-            if 'total' in energy_info:
-                power_data['total'] = round(energy_info['total'], 3)
+        # Get outlet information to know how many outlets exist
+        info = get_outlet_info()
+        if 'error' in info:
+            return jsonify({'success': False, 'error': info['error']}), 500
+        
+        outlets = info['outlets']
+        all_power_data = []
+        
+        # Get power data for each outlet
+        for outlet_num in sorted(outlets.keys()):
+            try:
+                energy_info = strip.get_realtime_energy_info(plug_num=outlet_num)
+                outlet_name = outlets[outlet_num]['name']
+                
+                # Format the power data (same logic as single outlet endpoint)
+                power_data = {
+                    'outlet_num': outlet_num,
+                    'outlet_name': outlet_name
+                }
+                
+                # Standard format
+                if 'voltage' in energy_info:
+                    power_data['voltage'] = round(energy_info['voltage'], 2)
+                if 'current' in energy_info:
+                    power_data['current'] = round(energy_info['current'], 3)
+                if 'power' in energy_info:
+                    power_data['power'] = round(energy_info['power'], 2)
+                if 'total' in energy_info:
+                    power_data['total'] = round(energy_info['total'], 3)
+                
+                # Millivolt/milliampere format
+                if 'voltage_mv' in energy_info:
+                    power_data['voltage'] = round(energy_info['voltage_mv'] / 1000, 2)
+                if 'current_ma' in energy_info:
+                    power_data['current'] = round(energy_info['current_ma'] / 1000, 3)
+                if 'power_mw' in energy_info:
+                    power_data['power'] = round(energy_info['power_mw'] / 1000, 2)
+                if 'total_mw' in energy_info:
+                    power_data['total'] = round(energy_info['total_mw'], 3)
+                
+                all_power_data.append(power_data)
+            except Exception as e:
+                # If one outlet fails, continue with others but log the error
+                all_power_data.append({
+                    'outlet_num': outlet_num,
+                    'outlet_name': outlets[outlet_num].get('name', f'Outlet {outlet_num}'),
+                    'error': str(e)
+                })
+        
+        return jsonify({
+            'success': True,
+            'power_data': all_power_data
+        })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
-    return jsonify({'success': True, 'power_data': power_data})
 
 
 

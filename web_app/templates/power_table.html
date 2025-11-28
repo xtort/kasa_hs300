@@ -2,30 +2,164 @@
 
 {% block content %}
 
-<h1>Power Table</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Outlet</th>
-            <th>Power</th>
-        </tr>
-    </thead>
-</table>
+<div class="power-table-container">
+    <h1>Power Draw - All Outlets</h1>
+    <button class="btn btn-info" onclick="loadPowerTable()" style="margin-bottom: 20px;">
+        <span class="icon">🔄</span> Refresh
+    </button>
+    
+    <div id="power-table-loading" class="loading-message">
+        <div class="spinner"></div>
+        <p>Loading power data...</p>
+    </div>
+    
+    <div id="power-table-error" class="error-message" style="display: none;"></div>
+    
+    <table id="power-table" class="power-table" style="display: none;">
+        <thead>
+            <tr>
+                <th>Outlet #</th>
+                <th>Name</th>
+                <th>Voltage (V)</th>
+                <th>Current (A)</th>
+                <th>Power (W)</th>
+                <th>Total Energy (kWh)</th>
+            </tr>
+        </thead>
+        <tbody id="power-table-body">
+        </tbody>
+    </table>
+</div>
+
 <script>
-    fetch('/api/outlets/all/power')
-        .then(response => response.json())
-        .then(data => {
+    // Load power table on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPowerTable();
+    });
+    
+    async function loadPowerTable() {
+        const loadingDiv = document.getElementById('power-table-loading');
+        const errorDiv = document.getElementById('power-table-error');
+        const table = document.getElementById('power-table');
+        const tableBody = document.getElementById('power-table-body');
+        
+        // Show loading state
+        loadingDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
+        table.style.display = 'none';
+        tableBody.innerHTML = '';
+        
+        try {
+            const response = await fetch('/api/outlets/all/power');
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error(data.error || 'Failed to load power data');
+            }
+            
             const powerData = data.power_data;
-            console.log(powerData);
-            const tableBody = document.querySelector('tbody');
+            
+            if (!powerData || powerData.length === 0) {
+                throw new Error('No power data available');
+            }
+            
+            // Clear and populate table
             powerData.forEach(power => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${power.outlet_num}</td>
-                    <td>${power.power}</td>
-                `;
+                
+                if (power.error) {
+                    row.innerHTML = `
+                        <td>${power.outlet_num}</td>
+                        <td>${escapeHtml(power.outlet_name)}</td>
+                        <td colspan="4" class="error-cell">Error: ${escapeHtml(power.error)}</td>
+                    `;
+                } else {
+                    row.innerHTML = `
+                        <td>${power.outlet_num}</td>
+                        <td>${escapeHtml(power.outlet_name)}</td>
+                        <td>${power.voltage !== undefined ? power.voltage.toFixed(2) : 'N/A'}</td>
+                        <td>${power.current !== undefined ? power.current.toFixed(3) : 'N/A'}</td>
+                        <td><strong>${power.power !== undefined ? power.power.toFixed(2) : 'N/A'}</strong></td>
+                        <td>${power.total !== undefined ? power.total.toFixed(3) : 'N/A'}</td>
+                    `;
+                }
+                
                 tableBody.appendChild(row);
             });
-        });
+            
+            // Show table, hide loading
+            loadingDiv.style.display = 'none';
+            table.style.display = 'table';
+            
+        } catch (error) {
+            loadingDiv.style.display = 'none';
+            errorDiv.textContent = `Error: ${error.message}`;
+            errorDiv.style.display = 'block';
+        }
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 </script>
+
+<style>
+    .power-table-container {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+    }
+    
+    .power-table-container h1 {
+        margin-bottom: 20px;
+        color: var(--text-primary);
+    }
+    
+    .power-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    .power-table th {
+        background: var(--primary-color);
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .power-table td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .power-table tbody tr:hover {
+        background: var(--bg-color);
+    }
+    
+    .power-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .error-cell {
+        color: var(--secondary-color);
+        font-style: italic;
+    }
+    
+    @media (max-width: 768px) {
+        .power-table {
+            font-size: 0.9em;
+        }
+        
+        .power-table th,
+        .power-table td {
+            padding: 8px;
+        }
+    }
+</style>
+
 {% endblock %}
