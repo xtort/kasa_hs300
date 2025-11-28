@@ -1,36 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Table</title>
-</head>
-<body>
-    <h1>Power Table</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Outlet</th>
-                <th>Power</th>
-            </tr>
-        </thead>
-    </table>
-    <script>
-        fetch('/api/outlets/all/power')
-            .then(response => response.json())
-            .then(data => {
-                const powerData = data.power_data;
-                console.log(powerData);
-                const tableBody = document.querySelector('tbody');
-                powerData.forEach(power => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${power.outlet_num}</td>
-                        <td>${power.power}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Power Table</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Outlet</th>
+            <th>Power</th>
+        </tr>
+    </thead>
+</table>
+<script>
+    fetch('/api/outlets/all/power')
+        .then(response => response.json())
+        .then(data => {
+            const powerData = data.power_data;
+            console.log(powerData);
+            const tableBody = document.querySelector('tbody');
+            powerData.forEach(power => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${power.outlet_num}</td>
+                    <td>${power.power}</td>
+                `;
+                tableBody.appendChild(row);
             });
-    </script>
-</body>
-</html>
+        });
+</script>
+{% endblock %}
