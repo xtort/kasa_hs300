@@ -90,8 +90,9 @@
             });
             const totalRow = document.createElement('tr');
             totalRow.innerHTML = `
-                <td colspan="5"><strong>Total:</strong></td>
+                <td colspan="4"><strong>Total:</strong></td>
                 <td><strong>${totalPower.toFixed(2)}</strong></td>
+                <td></td>
             `;
             tableBody.appendChild(totalRow);
             // Show table, hide loading
