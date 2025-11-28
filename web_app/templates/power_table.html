@@ -86,16 +86,14 @@
                     `;
                     totalPower += power.power;
                 }
-
-                const totalRow = document.createElement('tr');
-                totalRow.innerHTML = `
-                    <td colspan="5"><strong>Total:</strong></td>
-                    <td><strong>${totalPower.toFixed(2)}</strong></td>
-                `;
-                tableBody.appendChild(totalRow);
                 tableBody.appendChild(row);
             });
-            
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                <td colspan="5"><strong>Total:</strong></td>
+                <td><strong>${totalPower.toFixed(2)}</strong></td>
+            `;
+            tableBody.appendChild(totalRow);
             // Show table, hide loading
             loadingDiv.style.display = 'none';
             table.style.display = 'table';
