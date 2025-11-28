@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -63,6 +64,7 @@
                 throw new Error('No power data available');
             }
             
+            let totalPower = 0;
             // Clear and populate table
             powerData.forEach(power => {
                 const row = document.createElement('tr');
@@ -82,8 +84,15 @@
                         <td><strong>${power.power !== undefined ? power.power.toFixed(2) : 'N/A'}</strong></td>
                         <td>${power.total !== undefined ? power.total.toFixed(3) : 'N/A'}</td>
                     `;
+                    totalPower += power.power;
                 }
-                
+
+                const totalRow = document.createElement('tr');
+                totalRow.innerHTML = `
+                    <td colspan="5"><strong>Total:</strong></td>
+                    <td><strong>${totalPower.toFixed(2)}</strong></td>
+                `;
+                tableBody.appendChild(totalRow);
                 tableBody.appendChild(row);
             });
             
