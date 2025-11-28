@@ -157,6 +157,30 @@ def toggle_all_outlets():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/outlets/all/power', methods=['GET'])
+def get_all_power_draw():
+    """API endpoint to get power draw information for all outlets."""
+    strip = get_power_strip()
+    if not strip:
+        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500
+    
+    try:
+        for outlet_num in range(1, 7):
+            energy_info = strip.get_realtime_energy_info(plug_num=outlet_num)
+            power_data = {}
+            if 'voltage' in energy_info:
+                power_data['voltage'] = round(energy_info['voltage'], 2)
+            if 'current' in energy_info:
+                power_data['current'] = round(energy_info['current'], 3)
+            if 'power' in energy_info:
+                power_data['power'] = round(energy_info['power'], 2)
+            if 'total' in energy_info:
+                power_data['total'] = round(energy_info['total'], 3)
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+    return jsonify({'success': True, 'power_data': power_data})
+
+
 
 @app.route('/api/outlet/<int:outlet_num>/power', methods=['GET'])
 def get_power_draw(outlet_num):
