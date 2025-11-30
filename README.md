@@ -1,4 +1,5 @@
 # TP-Link HS300 Power Strip CLI
+# VERSION 1.0a
 
 A command-line interface for controlling TP-Link HS300 Smart Power Strip outlets. This tool provides an intuitive menu-driven system to view the status of all outlets and control individual outlets.
 
