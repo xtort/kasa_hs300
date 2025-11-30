@@ -1,4 +1,5 @@
 # TP-Link HS300 Power Strip Web Controller
+# VERSION 1.0a
 
 A modern web-based interface for controlling TP-Link HS300 Smart Power Strip outlets. This Flask application provides all the capabilities of the CLI application in a user-friendly browser interface.
 
