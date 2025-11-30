@@ -160,6 +160,7 @@ async function loadPowerTable() {
         `;
         tableBody.appendChild(row);
     });
+}
 /**
  * Show power draw information for an outlet
  */
@@ -264,4 +265,3 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-
