@@ -40,19 +40,30 @@
 
 {% block extra_scripts %}
 <script>
-    // Initialize the application
-    document.addEventListener('DOMContentLoaded', function() {
+    // Wait for main.js to load before initializing
+    let retryCount = 0;
+    const maxRetries = 50; // 5 seconds max wait time
+    
+    function initializeApp() {
         console.log('DOMContentLoaded fired');
         console.log('loadOutlets function:', typeof loadOutlets);
         
         if (typeof loadOutlets !== 'function') {
-            console.error('loadOutlets is not defined!');
-            const grid = document.getElementById('outlets-grid');
-            if (grid) {
-                grid.innerHTML = '<div class="error-message">Error: loadOutlets function not found. Please check the browser console.</div>';
+            retryCount++;
+            if (retryCount >= maxRetries) {
+                console.error('loadOutlets is not defined after ' + maxRetries + ' retries!');
+                const grid = document.getElementById('outlets-grid');
+                if (grid) {
+                    grid.innerHTML = '<div class="error-message">Error: Failed to load main.js. Please refresh the page.</div>';
+                }
+                return;
             }
+            console.warn('loadOutlets is not defined! Retrying in 100ms... (attempt ' + retryCount + '/' + maxRetries + ')');
+            setTimeout(initializeApp, 100);
             return;
         }
+        
+        console.log('main.js loaded successfully, initializing app...');
         
         // Load outlets on page load
         loadOutlets();
@@ -104,7 +115,15 @@
                 modal.style.display = 'none';
             }
         };
-    });
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    } else {
+        // DOM is already ready
+        initializeApp();
+    }
 </script>
 {% endblock %}
 
