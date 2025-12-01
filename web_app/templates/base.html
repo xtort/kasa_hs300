@@ -26,7 +26,35 @@
         </footer>
     </div>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}" onerror="console.error('Failed to load main.js')"></script>
+    <script>
+        // Load main.js with error handling
+        (function() {
+            const script = document.createElement('script');
+            script.src = "{{ url_for('static', filename='js/main.js') }}";
+            script.type = 'text/javascript';
+            script.async = false; // Load synchronously to ensure order
+            script.onerror = function() {
+                console.error('Failed to load main.js from:', script.src);
+                const grid = document.getElementById('outlets-grid');
+                if (grid) {
+                    grid.innerHTML = '<div class="error-message">Error: Failed to load main.js. Please check the browser console and ensure the file exists at: ' + script.src + '</div>';
+                }
+            };
+            script.onload = function() {
+                console.log('main.js loaded successfully from:', script.src);
+                // Give it a moment for functions to be defined
+                setTimeout(function() {
+                    console.log('After load - loadOutlets type:', typeof loadOutlets);
+                    if (typeof loadOutlets === 'function') {
+                        console.log('loadOutlets is available!');
+                    } else {
+                        console.error('loadOutlets is still not defined after script load!');
+                    }
+                }, 100);
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
