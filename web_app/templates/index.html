@@ -42,27 +42,62 @@
 <script>
     // Initialize the application
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOMContentLoaded fired');
+        console.log('loadOutlets function:', typeof loadOutlets);
+        
+        if (typeof loadOutlets !== 'function') {
+            console.error('loadOutlets is not defined!');
+            const grid = document.getElementById('outlets-grid');
+            if (grid) {
+                grid.innerHTML = '<div class="error-message">Error: loadOutlets function not found. Please check the browser console.</div>';
+            }
+            return;
+        }
+        
+        // Load outlets on page load
         loadOutlets();
         
         // Refresh button
-        document.getElementById('btn-refresh').addEventListener('click', loadOutlets);
+        const refreshBtn = document.getElementById('btn-refresh');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                console.log('Refresh button clicked');
+                loadOutlets();
+            });
+        }
         
         // Turn all on/off buttons
-        document.getElementById('btn-all-on').addEventListener('click', function() {
-            toggleAllOutlets('on');
-        });
+        const allOnBtn = document.getElementById('btn-all-on');
+        if (allOnBtn) {
+            allOnBtn.addEventListener('click', function() {
+                if (typeof toggleAllOutlets === 'function') {
+                    toggleAllOutlets('on');
+                } else {
+                    console.error('toggleAllOutlets is not defined');
+                }
+            });
+        }
         
-        document.getElementById('btn-all-off').addEventListener('click', function() {
-            toggleAllOutlets('off');
-        });
+        const allOffBtn = document.getElementById('btn-all-off');
+        if (allOffBtn) {
+            allOffBtn.addEventListener('click', function() {
+                if (typeof toggleAllOutlets === 'function') {
+                    toggleAllOutlets('off');
+                } else {
+                    console.error('toggleAllOutlets is not defined');
+                }
+            });
+        }
         
         // Modal close button
         const modal = document.getElementById('power-modal');
         const closeBtn = document.getElementsByClassName('close')[0];
         
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        };
+        if (closeBtn && modal) {
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+        }
         
         window.onclick = function(event) {
             if (event.target == modal) {

@@ -7,37 +7,81 @@ async function loadOutlets() {
     const grid = document.getElementById('outlets-grid');
     const deviceInfo = document.getElementById('device-info');
     
+    if (!grid || !deviceInfo) {
+        console.error('Required DOM elements not found');
+        return;
+    }
+    
     // Show loading state
     grid.innerHTML = '<div class="loading-message"><div class="spinner"></div><p>Loading outlets...</p></div>';
     deviceInfo.innerHTML = '<span class="loading">Loading device information...</span>';
     
     try {
-        const response = await fetch('/api/outlets');
+        console.log('Fetching outlets from /api/outlets...');
+        
+        // Create a timeout promise
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Request timeout after 10 seconds')), 10000);
+        });
+        
+        // Race between fetch and timeout
+        const response = await Promise.race([
+            fetch('/api/outlets'),
+            timeoutPromise
+        ]);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log('Received data:', data);
         
         if (data.error) {
+            console.error('API returned error:', data.error);
             grid.innerHTML = `<div class="error-message">Error: ${data.error}</div>`;
             deviceInfo.innerHTML = `<span style="color: var(--secondary-color);">Connection Error</span>`;
             return;
         }
         
+        if (!data.outlets) {
+            console.error('No outlets in response:', data);
+            grid.innerHTML = `<div class="error-message">Error: Invalid response format. No outlets found.</div>`;
+            deviceInfo.innerHTML = `<span style="color: var(--secondary-color);">Data Error</span>`;
+            return;
+        }
+        
         // Update device info
         deviceInfo.innerHTML = `
-            <strong>Device:</strong> ${data.device_name} | 
-            <strong>IP:</strong> ${data.ip_address}
+            <strong>Device:</strong> ${data.device_name || 'Unknown'} | 
+            <strong>IP:</strong> ${data.ip_address || 'Unknown'}
         `;
         
         // Render outlets
         grid.innerHTML = '';
         const outlets = data.outlets;
+        const outletCount = Object.keys(outlets).length;
+        console.log(`Rendering ${outletCount} outlets`);
         
-        for (const [num, outlet] of Object.entries(outlets)) {
-            const outletCard = createOutletCard(parseInt(num), outlet);
-            grid.appendChild(outletCard);
+        if (outletCount === 0) {
+            grid.innerHTML = '<div class="error-message">No outlets found</div>';
+            return;
         }
         
+        for (const [num, outlet] of Object.entries(outlets)) {
+            try {
+                const outletCard = createOutletCard(parseInt(num), outlet);
+                grid.appendChild(outletCard);
+            } catch (cardError) {
+                console.error(`Error creating card for outlet ${num}:`, cardError);
+            }
+        }
+        
+        console.log('Successfully loaded outlets');
+        
     } catch (error) {
-        grid.innerHTML = `<div class="error-message">Error loading outlets: ${error.message}</div>`;
+        console.error('Error loading outlets:', error);
+        grid.innerHTML = `<div class="error-message">Error loading outlets: ${error.message}<br><small>Check console for details</small></div>`;
         deviceInfo.innerHTML = `<span style="color: var(--secondary-color);">Connection Error</span>`;
     }
 }
