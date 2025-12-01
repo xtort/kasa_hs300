@@ -147,19 +147,23 @@ async function toggleAllOutlets(action) {
  * Load power table of all outlets and display them with a sum at the bottom
  */
 async function loadPowerTable() {
-    const response = await fetch('/api/outlets/all/power');
-    const data = await response.json();
-    const powerData = data.power_data;
-    console.log(powerData);
-    const tableBody = document.querySelector('tbody');
-    powerData.forEach(power => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${power.outlet_num}</td>
-            <td>${power.power}</td>
-        `;
-        tableBody.appendChild(row);
-    });
+    try {
+        const response = await fetch('/api/outlets/all/power');
+        const data = await response.json();
+        const powerData = data.power_data;
+        console.log(powerData);
+        const tableBody = document.querySelector('tbody');
+        powerData.forEach(power => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${power.outlet_num}</td>
+                <td>${power.power}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error loading power table:', error);
+    }
 }
 /**
  *
@@ -266,3 +270,4 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+
