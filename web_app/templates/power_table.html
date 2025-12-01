@@ -77,6 +77,7 @@
                         <td colspan="4" class="error-cell">Error: ${escapeHtml(power.error)}</td>
                     `;
                 } else {
+                    const powerValue = power.power !== undefined ? power.power : 0;
                     row.innerHTML = `
                         <td>${power.outlet_num}</td>
                         <td>${escapeHtml(power.outlet_name)}</td>
@@ -85,7 +86,9 @@
                         <td><strong>${power.power !== undefined ? power.power.toFixed(2) : 'N/A'}</strong></td>
                         <td>${power.total !== undefined ? power.total.toFixed(3) : 'N/A'}</td>
                     `;
-                    totalPower += power.power;
+                    if (power.power !== undefined) {
+                        totalPower += powerValue;
+                    }
                 }
                 tableBody.appendChild(row);
             });
@@ -112,6 +115,10 @@
         div.textContent = text;
         return div.innerHTML;
     }
+    
+    // Make sure loadPowerTable is accessible globally for onclick handler
+    window.loadPowerTable = loadPowerTable;
+    console.log('power_table.html: loadPowerTable function defined and assigned to window');
 </script>
 
 <style>

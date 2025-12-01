@@ -193,29 +193,6 @@ async function toggleAllOutlets(action) {
 }
 
 /**
- * Load power table of all outlets and display them with a sum at the bottom
- */
-async function loadPowerTable() {
-    try {
-        const response = await fetch('/api/outlets/all/power');
-        const data = await response.json();
-        const powerData = data.power_data;
-        console.log(powerData);
-        const tableBody = document.querySelector('tbody');
-        powerData.forEach(power => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${power.outlet_num}</td>
-                <td>${power.power}</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error loading power table:', error);
-    }
-}
-/**
- *
  * Show power draw information for an outlet
  */
 async function showPowerDraw(outletNum) {
@@ -332,7 +309,7 @@ if (typeof window !== 'undefined') {
     window.toggleOutlet = toggleOutlet;
     window.toggleAllOutlets = toggleAllOutlets;
     window.showPowerDraw = showPowerDraw;
-    window.loadPowerTable = loadPowerTable;
+    // Note: loadPowerTable is defined in power_table.html, not here
     console.log('main.js: Functions assigned to window object');
     console.log('main.js: Script execution complete - all functions should be available');
 }
