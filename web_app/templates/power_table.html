@@ -36,14 +36,28 @@
 <script>
     // Load power table on page load
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('power_table.html: DOMContentLoaded fired, calling loadPowerTable()');
         loadPowerTable();
     });
     
     async function loadPowerTable() {
+        console.log('loadPowerTable: Function called');
         const loadingDiv = document.getElementById('power-table-loading');
         const errorDiv = document.getElementById('power-table-error');
         const table = document.getElementById('power-table');
         const tableBody = document.getElementById('power-table-body');
+        
+        console.log('loadPowerTable: DOM elements found:', {
+            loadingDiv: !!loadingDiv,
+            errorDiv: !!errorDiv,
+            table: !!table,
+            tableBody: !!tableBody
+        });
+        
+        if (!loadingDiv || !errorDiv || !table || !tableBody) {
+            console.error('loadPowerTable: Required DOM elements not found!');
+            return;
+        }
         
         // Show loading state
         loadingDiv.style.display = 'block';
@@ -52,14 +66,34 @@
         tableBody.innerHTML = '';
         
         try {
-            const response = await fetch('/api/outlets/all/power');
+            console.log('loadPowerTable: Fetching /api/outlets/all/power...');
+            
+            // Create a timeout promise
+            const timeoutPromise = new Promise((_, reject) => {
+                setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000);
+            });
+            
+            // Race between fetch and timeout
+            const response = await Promise.race([
+                fetch('/api/outlets/all/power'),
+                timeoutPromise
+            ]);
+            
+            console.log('loadPowerTable: Response status:', response.status, response.statusText);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
+            console.log('loadPowerTable: Received data:', data);
             
             if (!data.success) {
                 throw new Error(data.error || 'Failed to load power data');
             }
             
             const powerData = data.power_data;
+            console.log('loadPowerTable: Power data:', powerData);
             
             if (!powerData || powerData.length === 0) {
                 throw new Error('No power data available');
@@ -100,13 +134,17 @@
             `;
             tableBody.appendChild(totalRow);
             // Show table, hide loading
+            console.log('loadPowerTable: Successfully populated table with', powerData.length, 'outlets');
             loadingDiv.style.display = 'none';
             table.style.display = 'table';
             
         } catch (error) {
+            console.error('loadPowerTable: Error occurred:', error);
+            console.error('loadPowerTable: Error stack:', error.stack);
             loadingDiv.style.display = 'none';
             errorDiv.textContent = `Error: ${error.message}`;
             errorDiv.style.display = 'block';
+            console.error('loadPowerTable: Error displayed to user');
         }
     }
     
