@@ -1,10 +1,8 @@
 // Main JavaScript for TP-Link HS300 Power Strip Web Controller
 
-// Wrap everything in try-catch to catch any errors
-try {
-    // Debug: Verify script is loading
-    console.log('main.js: Script loaded successfully');
-    console.log('main.js: Defining loadOutlets function...');
+// Debug: Verify script is loading
+console.log('main.js: Script loaded successfully');
+console.log('main.js: Defining loadOutlets function...');
 
 /**
  * Load all outlets and display them
@@ -328,14 +326,12 @@ console.log('main.js: loadOutlets type:', typeof loadOutlets);
 console.log('main.js: toggleOutlet type:', typeof toggleOutlet);
 console.log('main.js: toggleAllOutlets type:', typeof toggleAllOutlets);
 
-} catch (error) {
-    console.error('main.js: Error loading script:', error);
-    console.error('Error stack:', error.stack);
-    // Try to show error in UI if possible
-    if (typeof document !== 'undefined') {
-        const grid = document.getElementById('outlets-grid');
-        if (grid) {
-            grid.innerHTML = '<div class="error-message">Error loading main.js: ' + error.message + '<br><small>Check console for details</small></div>';
-        }
-    }
+// Verify functions are in global scope
+if (typeof window !== 'undefined') {
+    window.loadOutlets = loadOutlets;
+    window.toggleOutlet = toggleOutlet;
+    window.toggleAllOutlets = toggleAllOutlets;
+    window.showPowerDraw = showPowerDraw;
+    window.loadPowerTable = loadPowerTable;
+    console.log('main.js: Functions assigned to window object');
 }

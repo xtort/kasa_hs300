@@ -42,15 +42,27 @@
             };
             script.onload = function() {
                 console.log('main.js loaded successfully from:', script.src);
-                // Give it a moment for functions to be defined
-                setTimeout(function() {
-                    console.log('After load - loadOutlets type:', typeof loadOutlets);
-                    if (typeof loadOutlets === 'function') {
-                        console.log('loadOutlets is available!');
+                // Check immediately and after a short delay
+                function checkFunctions() {
+                    console.log('Checking functions...');
+                    console.log('  loadOutlets:', typeof loadOutlets);
+                    console.log('  window.loadOutlets:', typeof window.loadOutlets);
+                    console.log('  toggleOutlet:', typeof toggleOutlet);
+                    console.log('  window.toggleOutlet:', typeof window.toggleOutlet);
+                    
+                    if (typeof loadOutlets === 'function' || typeof window.loadOutlets === 'function') {
+                        console.log('✓ loadOutlets is available!');
                     } else {
-                        console.error('loadOutlets is still not defined after script load!');
+                        console.error('✗ loadOutlets is still not defined after script load!');
+                        console.error('Available globals:', Object.keys(window).filter(k => k.includes('load') || k.includes('toggle')));
                     }
-                }, 100);
+                }
+                
+                // Check immediately
+                checkFunctions();
+                
+                // Check again after a short delay
+                setTimeout(checkFunctions, 100);
             };
             document.head.appendChild(script);
         })();
