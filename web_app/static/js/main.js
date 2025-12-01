@@ -334,4 +334,9 @@ if (typeof window !== 'undefined') {
     window.showPowerDraw = showPowerDraw;
     window.loadPowerTable = loadPowerTable;
     console.log('main.js: Functions assigned to window object');
+    console.log('main.js: Script execution complete - all functions should be available');
 }
+
+// End of main.js - if you see this message, the file loaded completely
+console.log('main.js: File loaded and parsed successfully');
+
