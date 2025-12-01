@@ -100,32 +100,44 @@
             }
             
             let totalPower = 0;
+            console.log('loadPowerTable: Starting to populate table with', powerData.length, 'outlets');
+            
             // Clear and populate table
-            powerData.forEach(power => {
-                const row = document.createElement('tr');
-                
-                if (power.error) {
-                    row.innerHTML = `
-                        <td>${power.outlet_num}</td>
-                        <td>${escapeHtml(power.outlet_name)}</td>
-                        <td colspan="4" class="error-cell">Error: ${escapeHtml(power.error)}</td>
-                    `;
-                } else {
-                    const powerValue = power.power !== undefined ? power.power : 0;
-                    row.innerHTML = `
-                        <td>${power.outlet_num}</td>
-                        <td>${escapeHtml(power.outlet_name)}</td>
-                        <td>${power.voltage !== undefined ? power.voltage.toFixed(2) : 'N/A'}</td>
-                        <td>${power.current !== undefined ? power.current.toFixed(3) : 'N/A'}</td>
-                        <td><strong>${power.power !== undefined ? power.power.toFixed(2) : 'N/A'}</strong></td>
-                        <td>${power.total !== undefined ? power.total.toFixed(3) : 'N/A'}</td>
-                    `;
-                    if (power.power !== undefined) {
-                        totalPower += powerValue;
+            powerData.forEach((power, index) => {
+                try {
+                    console.log(`loadPowerTable: Processing outlet ${index + 1}/${powerData.length}:`, power);
+                    const row = document.createElement('tr');
+                    
+                    if (power.error) {
+                        row.innerHTML = `
+                            <td>${power.outlet_num}</td>
+                            <td>${escapeHtml(power.outlet_name)}</td>
+                            <td colspan="4" class="error-cell">Error: ${escapeHtml(power.error)}</td>
+                        `;
+                    } else {
+                        const powerValue = power.power !== undefined ? power.power : 0;
+                        row.innerHTML = `
+                            <td>${power.outlet_num}</td>
+                            <td>${escapeHtml(power.outlet_name)}</td>
+                            <td>${power.voltage !== undefined ? power.voltage.toFixed(2) : 'N/A'}</td>
+                            <td>${power.current !== undefined ? power.current.toFixed(3) : 'N/A'}</td>
+                            <td><strong>${power.power !== undefined ? power.power.toFixed(2) : 'N/A'}</strong></td>
+                            <td>${power.total !== undefined ? power.total.toFixed(3) : 'N/A'}</td>
+                        `;
+                        if (power.power !== undefined) {
+                            totalPower += powerValue;
+                        }
                     }
+                    tableBody.appendChild(row);
+                    console.log(`loadPowerTable: Added row for outlet ${power.outlet_num}`);
+                } catch (rowError) {
+                    console.error(`loadPowerTable: Error processing outlet ${power.outlet_num}:`, rowError);
                 }
-                tableBody.appendChild(row);
             });
+            
+            console.log('loadPowerTable: Finished processing outlets, totalPower:', totalPower);
+            console.log('loadPowerTable: Table body children count:', tableBody.children.length);
+            
             const totalRow = document.createElement('tr');
             totalRow.innerHTML = `
                 <td colspan="4"><strong>Total:</strong></td>
@@ -133,10 +145,19 @@
                 <td></td>
             `;
             tableBody.appendChild(totalRow);
+            
             // Show table, hide loading
             console.log('loadPowerTable: Successfully populated table with', powerData.length, 'outlets');
+            console.log('loadPowerTable: Hiding loading div, showing table');
+            console.log('loadPowerTable: loadingDiv.style.display before:', loadingDiv.style.display);
+            console.log('loadPowerTable: table.style.display before:', table.style.display);
+            
             loadingDiv.style.display = 'none';
             table.style.display = 'table';
+            
+            console.log('loadPowerTable: loadingDiv.style.display after:', loadingDiv.style.display);
+            console.log('loadPowerTable: table.style.display after:', table.style.display);
+            console.log('loadPowerTable: Table should now be visible');
             
         } catch (error) {
             console.error('loadPowerTable: Error occurred:', error);
