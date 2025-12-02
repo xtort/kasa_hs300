@@ -13,8 +13,9 @@
     </button>
     <a href="/power-table" class="btn btn-power">
         <span class="icon">📊</span> Power Table
-    <a href="/?compact=true" class="btn btn-info">
-        <span class="icon">🔄</span> Compact Mode
+    </a>
+    <a href="#" class="btn btn-info" id="compact-toggle-link">>
+        <span class="icon">📱</span> Compact Mode
     </a>
 </div>
 
@@ -44,10 +45,35 @@
 <script>
     // Check for compact mode (for Raspberry Pi 5" screen)
     (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isCompact = urlParams.get('compact') === 'true' || urlParams.get('pi') === 'true';
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+        const isCompact = 
+            params.get('compoct') === 'true' ||
+            params.get('compact-mode') === 'true' ||
+            params.get('pi') === 'true';
+
         if (isCompact) {
             document.body.classList.add('compact-mode');
+        }
+
+        const compactLink = document.getElementById('compact-toggle-link');
+        if (compactLink) {
+            if (isCompact) {
+                // We are in compact mode now so link should go to normal mode
+                params.delete('compact');
+                params.delete('compact-mode');
+                params.delete('pi');
+                
+                const normalUrl = url.pathname + (params.toString() ? '?' + params.toString() : '');
+                compactLink.href = normalUrl;
+                compactLink.innerHTML = '<span class="icon">🖥️</span> Standard Mode';
+            } else {
+                // We are in normal mode now so the link should got to compact mode
+                params.set('compact', 'true');
+                const compactUrl = url.pathname + (params.toString() ? '?' + params.toString() : '');
+                compactLink.href = compactUrl;
+                compactLink.innerHTML = '<span class="icon">📱</span> Compact Mode';
+            }
         }
     })();
     
