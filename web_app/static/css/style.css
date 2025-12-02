@@ -447,12 +447,16 @@ body.compact-mode .outlet-controls {
 body.compact-mode .outlet-controls .btn {
     padding: 4px 6px;
     font-size: 0.7em;
+    flex: none;  /* Override flex: 1 from base styles */
+    width: auto; /* Reset width */
 }
 
 body.compact-mode .outlet-controls .btn-power {
-    grid-column: 1 / 3;   /* span both columns */
+    grid-column: 1 / -1;   /* span all columns */
+    grid-row: 2;           /* force to second row */
     justify-self: center;
     max-width: 80%;
+    width: auto;
 }
 
 body.compact-mode .outlet-controls .btn .icon {
