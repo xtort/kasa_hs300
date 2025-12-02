@@ -451,6 +451,8 @@ body.compact-mode .outlet-controls .btn {
 
 body.compact-mode .outlet-controls .btn-power {
     grid-column: 1 / 3;   /* span both columns */
+    justify-self: center;
+    max-width: 80%;
 }
 
 body.compact-mode .outlet-controls .btn .icon {
