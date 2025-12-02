@@ -13,6 +13,8 @@
     </button>
     <a href="/power-table" class="btn btn-power">
         <span class="icon">📊</span> Power Table
+    <a href="/?compact=true" class="btn btn-info">
+        <span class="icon">🔄</span> Compact Mode
     </a>
 </div>
 
@@ -40,6 +42,15 @@
 
 {% block extra_scripts %}
 <script>
+    // Check for compact mode (for Raspberry Pi 5" screen)
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isCompact = urlParams.get('compact') === 'true' || urlParams.get('pi') === 'true';
+        if (isCompact) {
+            document.body.classList.add('compact-mode');
+        }
+    })();
+    
     // Wait for main.js to load before initializing
     let retryCount = 0;
     const maxRetries = 3; // 5 seconds max wait time

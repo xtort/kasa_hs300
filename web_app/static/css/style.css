@@ -376,6 +376,85 @@ footer {
     border-left: 4px solid var(--success-color);
 }
 
+/* Compact Mode for Raspberry Pi 5" Screen */
+body.compact-mode {
+    padding: 5px;
+    background: var(--bg-color);
+}
+
+body.compact-mode header,
+body.compact-mode footer {
+    display: none;
+}
+
+body.compact-mode .container {
+    max-width: 100%;
+}
+
+body.compact-mode .controls-bar {
+    margin-bottom: 10px;
+    gap: 8px;
+}
+
+body.compact-mode .controls-bar .btn {
+    padding: 8px 12px;
+    font-size: 0.85em;
+    flex: 1;
+    min-width: 0;
+}
+
+body.compact-mode .controls-bar .btn .icon {
+    font-size: 1em;
+}
+
+body.compact-mode .outlets-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+body.compact-mode .outlet-card {
+    padding: 12px;
+    border-radius: 8px;
+}
+
+body.compact-mode .outlet-header {
+    margin-bottom: 8px;
+}
+
+body.compact-mode .outlet-number {
+    font-size: 0.9em;
+}
+
+body.compact-mode .outlet-status {
+    padding: 4px 8px;
+    font-size: 0.7em;
+}
+
+body.compact-mode .outlet-name {
+    font-size: 1em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+body.compact-mode .outlet-controls {
+    gap: 6px;
+    margin-top: 10px;
+}
+
+body.compact-mode .outlet-controls .btn {
+    padding: 6px 8px;
+    font-size: 0.75em;
+}
+
+body.compact-mode .outlet-controls .btn .icon {
+    font-size: 0.9em;
+}
+
+body.compact-mode .device-info {
+    display: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     header h1 {
