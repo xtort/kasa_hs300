@@ -408,7 +408,7 @@ body.compact-mode .controls-bar .btn .icon {
 }
 
 body.compact-mode .outlets-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     gap: 8px;
     margin-bottom: 10px;
 }
@@ -443,12 +443,12 @@ body.compact-mode .outlet-controls {
 }
 
 body.compact-mode .outlet-controls .btn {
-    padding: 6px 8px;
-    font-size: 0.75em;
+    padding: 4px 6px;
+    font-size: 0.7em;
 }
 
 body.compact-mode .outlet-controls .btn .icon {
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 body.compact-mode .device-info {
