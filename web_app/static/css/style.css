@@ -440,6 +440,7 @@ body.compact-mode .outlet-name {
 body.compact-mode .outlet-controls {
     display: grid;
     grid-template-columns: repeat(2, 1fr);  /* 2 buttons per row */
+    grid-template-rows: auto auto;  /* Explicitly define 2 rows */
     gap: 6px;
     margin-top: 10px;
 }
@@ -454,9 +455,10 @@ body.compact-mode .outlet-controls .btn {
 body.compact-mode .outlet-controls .btn-power {
     grid-column: 1 / -1;   /* span all columns */
     grid-row: 2;           /* force to second row */
-    justify-self: center;
-    max-width: 80%;
-    width: auto;
+    justify-self: stretch; /* Stretch to fill available width */
+    max-width: 100%;       /* Allow full width within grid column */
+    width: 100%;           /* Take full width */
+    margin-top: 0;         /* Ensure no extra margin */
 }
 
 body.compact-mode .outlet-controls .btn .icon {
