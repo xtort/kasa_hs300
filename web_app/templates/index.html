@@ -14,7 +14,7 @@
     <a href="/power-table" class="btn btn-power">
         <span class="icon">📊</span> Power Table
     </a>
-    <a href="#" class="btn btn-info" id="compact-toggle-link">>
+    <a href="/" class="btn btn-info" id="compact-toggle-link">
         <span class="icon">📱</span> Compact Mode
     </a>
 </div>
@@ -48,7 +48,7 @@
         const url = new URL(window.location.href);
         const params = url.searchParams;
         const isCompact = 
-            params.get('compoct') === 'true' ||
+            params.get('compact') === 'true' ||
             params.get('compact-mode') === 'true' ||
             params.get('pi') === 'true';
 
@@ -68,7 +68,7 @@
                 compactLink.href = normalUrl;
                 compactLink.innerHTML = '<span class="icon">🖥️</span> Standard Mode';
             } else {
-                // We are in normal mode now so the link should got to compact mode
+                // We are in normal mode now so the link should go to compact mode
                 params.set('compact', 'true');
                 const compactUrl = url.pathname + (params.toString() ? '?' + params.toString() : '');
                 compactLink.href = compactUrl;
