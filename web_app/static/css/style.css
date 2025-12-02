@@ -438,6 +438,8 @@ body.compact-mode .outlet-name {
 }
 
 body.compact-mode .outlet-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 2 buttons per row */
     gap: 6px;
     margin-top: 10px;
 }
@@ -445,6 +447,10 @@ body.compact-mode .outlet-controls {
 body.compact-mode .outlet-controls .btn {
     padding: 4px 6px;
     font-size: 0.7em;
+}
+
+body.compact-mode .outlet-controls .btn-power {
+    grid-column: 1 / 3;   /* span both columns */
 }
 
 body.compact-mode .outlet-controls .btn .icon {
