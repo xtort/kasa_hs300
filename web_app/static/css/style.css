@@ -470,6 +470,66 @@ body.compact-mode .device-info {
     display: none;
 }
 
+/* Compact Mode Power Table Styles */
+body.compact-mode .power-table-container {
+    padding: 10px;
+    margin: 0;
+}
+
+body.compact-mode .power-table-container h1 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+body.compact-mode .power-table-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+body.compact-mode .power-table-controls .btn {
+    padding: 6px 10px;
+    font-size: 0.8em;
+    flex: 1;
+    min-width: 0;
+}
+
+body.compact-mode .compact-back-btn {
+    display: inline-flex !important;
+}
+
+body.compact-mode #back-btn {
+    display: none !important;
+}
+
+body.compact-mode .power-table {
+    font-size: 0.75em;
+    margin-top: 10px;
+}
+
+body.compact-mode .power-table th {
+    padding: 6px 4px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+body.compact-mode .power-table td {
+    padding: 6px 4px;
+    font-size: 0.85em;
+}
+
+body.compact-mode .power-table th:nth-child(3),
+body.compact-mode .power-table th:nth-child(4),
+body.compact-mode .power-table th:nth-child(5),
+body.compact-mode .power-table th:nth-child(6),
+body.compact-mode .power-table td:nth-child(3),
+body.compact-mode .power-table td:nth-child(4),
+body.compact-mode .power-table td:nth-child(5),
+body.compact-mode .power-table td:nth-child(6) {
+    text-align: right;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     header h1 {

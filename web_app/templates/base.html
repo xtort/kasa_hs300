@@ -22,10 +22,11 @@
 
         <footer>
             <p>TP-Link HS300 Smart Power Strip Web Controller</p>
-            <a href="/power_table">Power Table</a>
+            <a href="/power-table" data-preserve-compact>Power Table</a>
         </footer>
     </div>
 
+    <script src="{{ url_for('static', filename='js/compact-mode.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_scripts %}{% endblock %}
 </body>

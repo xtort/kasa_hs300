@@ -5,10 +5,15 @@
 
 <div class="power-table-container">
     <h1>Power Draw - All Outlets</h1>
-    <a href="/" class="btn btn-primary">Back to Home</a>
-    <button class="btn btn-info" onclick="loadPowerTable()" style="margin-bottom: 20px;">
-        <span class="icon">🔄</span> Refresh
-    </button>
+    <div class="power-table-controls">
+        <a href="/" class="btn btn-primary" id="back-btn" data-preserve-compact>Back to Home</a>
+        <a href="/" class="btn btn-primary compact-back-btn" id="compact-back-btn" style="display: none;" data-preserve-compact>
+            <span class="icon">←</span> Back
+        </a>
+        <button class="btn btn-info" onclick="loadPowerTable()" style="margin-bottom: 20px;">
+            <span class="icon">🔄</span> Refresh
+        </button>
+    </div>
     
     <div id="power-table-loading" class="loading-message">
         <div class="spinner"></div>
@@ -34,10 +39,58 @@
 </div>
 
 <script>
+    // Handle compact mode UI updates
+    (function() {
+        // Wait for CompactMode utility to load
+        function initCompactMode() {
+            if (typeof window.CompactMode === 'undefined') {
+                setTimeout(initCompactMode, 50);
+                return;
+            }
+            
+            const isCompact = window.CompactMode.isEnabled();
+            
+            // Show/hide appropriate back button
+            const compactBackBtn = document.getElementById('compact-back-btn');
+            const regularBackBtn = document.getElementById('back-btn');
+            
+            if (isCompact) {
+                if (compactBackBtn) compactBackBtn.style.display = 'inline-flex';
+                if (regularBackBtn) regularBackBtn.style.display = 'none';
+                
+                // Update compact back button href to preserve compact mode
+                if (compactBackBtn) {
+                    compactBackBtn.href = window.CompactMode.getUrl('/', true);
+                }
+            } else {
+                if (compactBackBtn) compactBackBtn.style.display = 'none';
+                if (regularBackBtn) regularBackBtn.style.display = 'inline-flex';
+            }
+        }
+        
+        initCompactMode();
+    })();
+    
+    // Auto-refresh interval variable
+    let refreshInterval = null;
+    
     // Load power table on page load
     document.addEventListener('DOMContentLoaded', function() {
         console.log('power_table.html: DOMContentLoaded fired, calling loadPowerTable()');
         loadPowerTable();
+        
+        // Set up auto-refresh every 10 seconds
+        refreshInterval = setInterval(function() {
+            console.log('power_table.html: Auto-refreshing power table...');
+            loadPowerTable();
+        }, 10000); // 10 seconds
+    });
+    
+    // Clean up interval when page unloads
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
     });
     
     async function loadPowerTable() {

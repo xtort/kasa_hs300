@@ -11,7 +11,7 @@
     <button class="btn btn-info" id="btn-refresh">
         <span class="icon">🔄</span> Refresh
     </button>
-    <a href="/power-table" class="btn btn-power">
+    <a href="/power-table" class="btn btn-power" id="power-table-link" data-preserve-compact>
         <span class="icon">📊</span> Power Table
     </a>
     <a href="/" class="btn btn-info" id="compact-toggle-link">
@@ -43,38 +43,53 @@
 
 {% block extra_scripts %}
 <script>
-    // Check for compact mode (for Raspberry Pi 5" screen)
+    // Handle compact mode toggle and link updates
     (function() {
-        const url = new URL(window.location.href);
-        const params = url.searchParams;
-        const isCompact = 
-            params.get('compact') === 'true' ||
-            params.get('compact-mode') === 'true' ||
-            params.get('pi') === 'true';
-
-        if (isCompact) {
-            document.body.classList.add('compact-mode');
-        }
-
-        const compactLink = document.getElementById('compact-toggle-link');
-        if (compactLink) {
-            if (isCompact) {
-                // We are in compact mode now so link should go to normal mode
-                params.delete('compact');
-                params.delete('compact-mode');
-                params.delete('pi');
-                
-                const normalUrl = url.pathname + (params.toString() ? '?' + params.toString() : '');
-                compactLink.href = normalUrl;
-                compactLink.innerHTML = '<span class="icon">🖥️</span> Standard Mode';
-            } else {
-                // We are in normal mode now so the link should go to compact mode
-                params.set('compact', 'true');
-                const compactUrl = url.pathname + (params.toString() ? '?' + params.toString() : '');
-                compactLink.href = compactUrl;
-                compactLink.innerHTML = '<span class="icon">📱</span> Compact Mode';
+        // Wait for CompactMode utility to load
+        function initCompactMode() {
+            if (typeof window.CompactMode === 'undefined') {
+                setTimeout(initCompactMode, 50);
+                return;
             }
+            
+            const compactLink = document.getElementById('compact-toggle-link');
+            if (compactLink) {
+                const isCompact = window.CompactMode.isEnabled();
+                
+                // Update link text and href
+                if (isCompact) {
+                    compactLink.href = window.CompactMode.getUrl('/', false);
+                    compactLink.innerHTML = '<span class="icon">🖥️</span> Standard Mode';
+                } else {
+                    compactLink.href = window.CompactMode.getUrl('/', true);
+                    compactLink.innerHTML = '<span class="icon">📱</span> Compact Mode';
+                }
+                
+                // Add click handler to toggle and update
+                compactLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const newState = window.CompactMode.toggle();
+                    
+                    // Update link text
+                    if (newState) {
+                        compactLink.innerHTML = '<span class="icon">🖥️</span> Standard Mode';
+                    } else {
+                        compactLink.innerHTML = '<span class="icon">📱</span> Compact Mode';
+                    }
+                    
+                    // Update all links
+                    window.CompactMode.updateLinks();
+                    
+                    // Navigate to the new URL
+                    window.location.href = compactLink.href;
+                });
+            }
+            
+            // Update all links to preserve compact mode
+            window.CompactMode.updateLinks();
         }
+        
+        initCompactMode();
     })();
     
     // Wait for main.js to load before initializing
