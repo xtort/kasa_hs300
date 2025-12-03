@@ -447,7 +447,7 @@ body.compact-mode .outlet-controls {
 }
 
 body.compact-mode .outlet-controls .btn {
-    padding: 4px 4px;  /* Increased by 10%: 3px 4px -> 4px 4px */
+    padding: 10px 4px;  /* Controls height and width of the buttons Increased by 10%: 3px 4px -> 4px 4px */
     font-size: 0.7em;
     flex: none;  /* Override flex: 1 from base styles */
     width: auto; /* Reset width */
