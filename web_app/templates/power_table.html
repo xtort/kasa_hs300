@@ -75,7 +75,7 @@
     // Auto-refresh interval variable
     let refreshInterval = null;
     let countdownInterval = null;
-    let countdownSeconds = 10;
+    let countdownSeconds = 60;
     
     // Update countdown display
     function updateCountdown() {
@@ -87,7 +87,7 @@
     
     // Start countdown timer
     function startCountdown() {
-        countdownSeconds = 10;
+        countdownSeconds = 60;
         updateCountdown();
         
         if (countdownInterval) {
@@ -99,7 +99,7 @@
             updateCountdown();
             
             if (countdownSeconds <= 0) {
-                countdownSeconds = 10;
+                countdownSeconds = 60;
             }
         }, 1000); // Update every second
     }
