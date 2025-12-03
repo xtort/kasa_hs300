@@ -397,7 +397,7 @@ body.compact-mode .controls-bar {
 }
 
 body.compact-mode .controls-bar .btn {
-    padding: 8px 12px;
+    padding: 9px 13px;  /* Increased by 10%: 8px 12px -> 9px 13px */
     font-size: 0.85em;
     flex: 1;
     min-width: 0;
@@ -408,14 +408,14 @@ body.compact-mode .controls-bar .btn .icon {
 }
 
 body.compact-mode .outlets-grid {
-    grid-template-columns: repeat(auto-fill, minmax(161px, 1fr));  /* Reduced by 33%: 240px -> 161px */
-    gap: 5px;  /* Reduced by 33%: 8px -> 5px */
+    grid-template-columns: repeat(auto-fill, minmax(177px, 1fr));  /* Increased by 10%: 161px -> 177px */
+    gap: 6px;  /* Increased by 10%: 5px -> 6px */
     margin-bottom: 7px;  /* Reduced by 33%: 10px -> 7px */
 }
 
 body.compact-mode .outlet-card {
-    padding: 16px;  /* Reduced by 33%: 24px -> 16px */
-    border-radius: 8px;  /* Reduced by 33%: 12px -> 8px */
+    padding: 18px;  /* Increased by 10%: 16px -> 18px */
+    border-radius: 9px;  /* Increased by 10%: 8px -> 9px */
 }
 
 body.compact-mode .outlet-header {
@@ -441,12 +441,12 @@ body.compact-mode .outlet-controls {
     display: grid;
     grid-template-columns: repeat(2, 1fr);  /* 2 buttons per row */
     grid-template-rows: auto auto;  /* Explicitly define 2 rows */
-    gap: 5px;  /* Reduced by 33%: 8px -> 5px */
+    gap: 6px;  /* Increased by 10%: 5px -> 6px */
     margin-top: 8px;  /* Reduced by 33%: 12px -> 8px */
 }
 
 body.compact-mode .outlet-controls .btn {
-    padding: 3px 4px;  /* Reduced by 33%: 4px 6px -> 3px 4px */
+    padding: 4px 4px;  /* Increased by 10%: 3px 4px -> 4px 4px */
     font-size: 0.7em;
     flex: none;  /* Override flex: 1 from base styles */
     width: auto; /* Reset width */
