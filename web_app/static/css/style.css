@@ -407,8 +407,9 @@ body.compact-mode .controls-bar .btn .icon {
     font-size: 1em;
 }
 
+/* Sets the grid for the outlets */
 body.compact-mode .outlets-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  /* Increased by 10%: 161px -> 177px */
+    grid-template-columns: repeat(3, 1fr);  /* Force exactly 3 columns per row */
     gap: 6px;  /* Increased by 10%: 5px -> 6px */
     margin-bottom: 7px;  /* Reduced by 33%: 10px -> 7px */
 }
