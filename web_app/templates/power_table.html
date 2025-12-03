@@ -10,9 +10,10 @@
         <a href="/" class="btn btn-primary compact-back-btn" id="compact-back-btn" style="display: none;" data-preserve-compact>
             <span class="icon">←</span> Back
         </a>
-        <button class="btn btn-info" onclick="loadPowerTable()" style="margin-bottom: 20px;">
+        <button class="btn btn-info" onclick="manualRefresh()" style="margin-bottom: 20px;">
             <span class="icon">🔄</span> Refresh
         </button>
+        <span id="refresh-countdown" class="refresh-countdown"></span>
     </div>
     
     <div id="power-table-loading" class="loading-message">
@@ -73,23 +74,63 @@
     
     // Auto-refresh interval variable
     let refreshInterval = null;
+    let countdownInterval = null;
+    let countdownSeconds = 10;
+    
+    // Update countdown display
+    function updateCountdown() {
+        const countdownEl = document.getElementById('refresh-countdown');
+        if (countdownEl) {
+            countdownEl.textContent = countdownSeconds;
+        }
+    }
+    
+    // Start countdown timer
+    function startCountdown() {
+        countdownSeconds = 10;
+        updateCountdown();
+        
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+        
+        countdownInterval = setInterval(function() {
+            countdownSeconds--;
+            updateCountdown();
+            
+            if (countdownSeconds <= 0) {
+                countdownSeconds = 10;
+            }
+        }, 1000); // Update every second
+    }
+    
+    // Manual refresh handler
+    function manualRefresh() {
+        loadPowerTable();
+        startCountdown(); // Reset countdown on manual refresh
+    }
     
     // Load power table on page load
     document.addEventListener('DOMContentLoaded', function() {
         console.log('power_table.html: DOMContentLoaded fired, calling loadPowerTable()');
         loadPowerTable();
+        startCountdown();
         
         // Set up auto-refresh every 10 seconds
         refreshInterval = setInterval(function() {
             console.log('power_table.html: Auto-refreshing power table...');
             loadPowerTable();
+            startCountdown(); // Reset countdown after refresh
         }, 10000); // 10 seconds
     });
     
-    // Clean up interval when page unloads
+    // Clean up intervals when page unloads
     window.addEventListener('beforeunload', function() {
         if (refreshInterval) {
             clearInterval(refreshInterval);
+        }
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
         }
     });
     
@@ -230,6 +271,7 @@
     
     // Make sure loadPowerTable is accessible globally for onclick handler
     window.loadPowerTable = loadPowerTable;
+    window.manualRefresh = manualRefresh;
     console.log('power_table.html: loadPowerTable function defined and assigned to window');
 </script>
 
@@ -276,6 +318,22 @@
     .error-cell {
         color: var(--secondary-color);
         font-style: italic;
+    }
+    
+    .refresh-countdown {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 10px;
+        font-size: 1.2em;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-left: 10px;
+    }
+    
+    body.compact-mode .refresh-countdown {
+        font-size: 0.9em;
+        padding: 0 5px;
+        margin-left: 5px;
     }
     
     @media (max-width: 768px) {
