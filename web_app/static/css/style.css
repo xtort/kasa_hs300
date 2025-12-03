@@ -484,7 +484,7 @@ body.compact-mode .power-table-container h1 {
 body.compact-mode .power-table-controls {
     display: flex;
     gap: 8px;
-    margin-bottom: 5px;
+0    margin-bottom: 5px;
     flex-wrap: wrap;
 }
 
@@ -510,7 +510,7 @@ body.compact-mode .power-table {
 
 body.compact-mode .power-table th {
     padding: 6px 4px;
-    font-size: 0.85em;
+    font-size: 1em; /* Increased by 10%: 0.9em -> 1em */
     font-weight: 600;
 }
 
