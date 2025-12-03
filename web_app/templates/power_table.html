@@ -116,12 +116,12 @@
         loadPowerTable();
         startCountdown();
         
-        // Set up auto-refresh every 10 seconds
+        // Set up auto-refresh every 60 seconds
         refreshInterval = setInterval(function() {
             console.log('power_table.html: Auto-refreshing power table...');
             loadPowerTable();
             startCountdown(); // Reset countdown after refresh
-        }, 10000); // 10 seconds
+        }, 60000); // 60 seconds
     });
     
     // Clean up intervals when page unloads

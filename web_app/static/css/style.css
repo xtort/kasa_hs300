@@ -484,7 +484,7 @@ body.compact-mode .power-table-container h1 {
 body.compact-mode .power-table-controls {
     display: flex;
     gap: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     flex-wrap: wrap;
 }
 
@@ -505,7 +505,7 @@ body.compact-mode #back-btn {
 
 body.compact-mode .power-table {
     font-size: 0.75em;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 body.compact-mode .power-table th {
