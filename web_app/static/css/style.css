@@ -408,18 +408,18 @@ body.compact-mode .controls-bar .btn .icon {
 }
 
 body.compact-mode .outlets-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 8px;
-    margin-bottom: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(161px, 1fr));  /* Reduced by 33%: 240px -> 161px */
+    gap: 5px;  /* Reduced by 33%: 8px -> 5px */
+    margin-bottom: 7px;  /* Reduced by 33%: 10px -> 7px */
 }
 
 body.compact-mode .outlet-card {
-    padding: 24px;  /* 2x larger: 12px -> 24px */
-    border-radius: 12px;  /* Slightly larger radius */
+    padding: 16px;  /* Reduced by 33%: 24px -> 16px */
+    border-radius: 8px;  /* Reduced by 33%: 12px -> 8px */
 }
 
 body.compact-mode .outlet-header {
-    margin-bottom: 8px;
+    margin-bottom: 5px;  /* Reduced by 33%: 8px -> 5px */
 }
 
 body.compact-mode .outlet-number {
@@ -427,13 +427,13 @@ body.compact-mode .outlet-number {
 }
 
 body.compact-mode .outlet-status {
-    padding: 6px 10px;
+    padding: 4px 7px;  /* Reduced by 33%: 6px 10px -> 4px 7px */
     font-size: 0.7em;
 }
 
 body.compact-mode .outlet-name {
     font-size: 1em;
-    margin-bottom: 10px;
+    margin-bottom: 7px;  /* Reduced by 33%: 10px -> 7px */
     line-height: 1.2;
 }
 
@@ -441,12 +441,12 @@ body.compact-mode .outlet-controls {
     display: grid;
     grid-template-columns: repeat(2, 1fr);  /* 2 buttons per row */
     grid-template-rows: auto auto;  /* Explicitly define 2 rows */
-    gap: 8px;
-    margin-top: 12px;
+    gap: 5px;  /* Reduced by 33%: 8px -> 5px */
+    margin-top: 8px;  /* Reduced by 33%: 12px -> 8px */
 }
 
 body.compact-mode .outlet-controls .btn {
-    padding: 4px 6px;
+    padding: 3px 4px;  /* Reduced by 33%: 4px 6px -> 3px 4px */
     font-size: 0.7em;
     flex: none;  /* Override flex: 1 from base styles */
     width: auto; /* Reset width */
@@ -462,7 +462,7 @@ body.compact-mode .outlet-controls .btn-power {
 }
 
 body.compact-mode .outlet-controls .btn .icon {
-    font-size: 1.1em;  /* Increased from 0.8em for better visibility */
+    font-size: 0.74em;  /* Reduced by 33%: 1.1em -> 0.74em */
 }
 
 body.compact-mode .device-info {
