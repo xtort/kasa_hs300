@@ -510,13 +510,13 @@ body.compact-mode .power-table {
 
 body.compact-mode .power-table th {
     padding: 6px 4px;
-    font-size: 1em; /* Increased by 10%: 0.9em -> 1em */
+    font-size: 1em;
     font-weight: 600;
 }
 
 body.compact-mode .power-table td {
     padding: 6px 4px;
-    font-size: 0.85em;
+    font-size: 1.5em;
 }
 
 body.compact-mode .power-table th:nth-child(3),
