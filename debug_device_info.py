@@ -26,8 +26,7 @@ def debug_device_info(ip):
     """Debug the device information and plug ID generation."""
     
     # IP address of your power strip (change this to match your setup)
-    #ip_address = "192.168.2.3"  # Update this to your power strip's IP
-    ip_address = ip
+    ip_address = "192.168.50.137"  # Update this to your power strip's IP
     
     print("Debugging device information and plug ID generation...")
     print(f"Power strip IP: {ip_address}")
