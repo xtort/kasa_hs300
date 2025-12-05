@@ -9,6 +9,7 @@ outlets, and monitoring power draw.
 
 import sys
 import os
+import json
 from flask import Flask, render_template, jsonify, request
 from typing import Dict, Optional
 
@@ -26,9 +27,52 @@ except ImportError as e:
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'
 
+# Configuration file path
+CONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')
+
 # Global power strip instance
 power_strip: Optional[SmartPowerStrip] = None
 power_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')
+
+
+def load_web_config() -> Dict:
+    """Load web app configuration from JSON file."""
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, 'r') as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Error reading config file: {e}")
+            return {}
+    return {}
+
+
+def save_web_config(config_data: Dict) -> bool:
+    """Save web app configuration to JSON file."""
+    try:
+        with open(CONFIG_FILE, 'w') as f:
+            json.dump(config_data, f, indent=2)
+        return True
+    except IOError as e:
+        print(f"Error writing config file: {e}")
+        return False
+
+
+def get_power_strip_ip() -> str:
+    """Get power strip IP from web config or fallback to config.py."""
+    web_config = load_web_config()
+    return web_config.get('power_strip_ip', getattr(config, 'POWER_STRIP_IP', '192.168.50.137'))
+
+
+def reset_power_strip_connection():
+    """Reset the power strip connection (useful when IP changes)."""
+    global power_strip, power_strip_ip
+    power_strip = None
+    power_strip_ip = get_power_strip_ip()
+
+
+# Initialize power strip IP from config
+power_strip_ip = get_power_strip_ip()
 
 
 def get_power_strip() -> Optional[SmartPowerStrip]:
@@ -123,7 +167,7 @@ def toggle_outlet(outlet_num):
             return jsonify({'success': False, 'error': 'Invalid action'}), 400
         
         # Toggle the outlet
-        result = strip.toggle_plug(action, plug_num=outlet_num)
+        strip.toggle_plug(action, plug_num=outlet_num)
         
         return jsonify({
             'success': True,
@@ -154,7 +198,7 @@ def toggle_all_outlets():
             return jsonify({'success': False, 'error': info['error']}), 500
         
         outlet_numbers = list(info['outlets'].keys())
-        result = strip.toggle_plugs(action, plug_num_list=outlet_numbers)
+        strip.toggle_plugs(action, plug_num_list=outlet_numbers)
         
         return jsonify({
             'success': True,
@@ -277,12 +321,75 @@ def get_power_draw(outlet_num):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    """API endpoint to get current configuration."""
+    web_config = load_web_config()
+    current_ip = web_config.get('power_strip_ip', getattr(config, 'POWER_STRIP_IP', '192.168.50.137'))
+    
+    return jsonify({
+        'success': True,
+        'power_strip_ip': current_ip
+    })
+
+
+@app.route('/api/config', methods=['POST'])
+def update_config():
+    """API endpoint to update configuration."""
+    try:
+        data = request.get_json()
+        new_ip = data.get('power_strip_ip', '').strip()
+        
+        # Validate IP address format (basic validation)
+        if not new_ip:
+            return jsonify({'success': False, 'error': 'IP address cannot be empty'}), 400
+        
+        # Basic IP validation
+        ip_parts = new_ip.split('.')
+        if len(ip_parts) != 4:
+            return jsonify({'success': False, 'error': 'Invalid IP address format'}), 400
+        
+        try:
+            for part in ip_parts:
+                num = int(part)
+                if num < 0 or num > 255:
+                    raise ValueError()
+        except ValueError:
+            return jsonify({'success': False, 'error': 'Invalid IP address format'}), 400
+        
+        # Save new configuration
+        web_config = load_web_config()
+        web_config['power_strip_ip'] = new_ip
+        
+        if not save_web_config(web_config):
+            return jsonify({'success': False, 'error': 'Failed to save configuration'}), 500
+        
+        # Reset connection to use new IP
+        reset_power_strip_connection()
+        
+        # Test connection with new IP
+        test_strip = get_power_strip()
+        if test_strip is None:
+            return jsonify({
+                'success': False,
+                'error': 'Configuration saved but failed to connect to power strip with new IP address'
+            }), 500
+        
+        return jsonify({
+            'success': True,
+            'power_strip_ip': new_ip,
+            'message': 'Configuration updated successfully'
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     # Get IP from config or use default
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
     
-    print(f"Starting Flask web application...")
+    print("Starting Flask web application...")
     print(f"Power Strip IP: {power_strip_ip}")
     print(f"Server will run on http://localhost:{port}")
     

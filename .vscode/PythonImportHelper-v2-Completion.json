@@ -1,0 +1,705 @@
+[
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "Mock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "KasaPowerStripCLI",
+        "importPath": "src.kasa_cli",
+        "description": "src.kasa_cli",
+        "isExtraImport": true,
+        "detail": "src.kasa_cli",
+        "documentation": {}
+    },
+    {
+        "label": "KasaPowerStripCLI",
+        "importPath": "src.kasa_cli",
+        "description": "src.kasa_cli",
+        "isExtraImport": true,
+        "detail": "src.kasa_cli",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "importPath": "src.kasa_cli",
+        "description": "src.kasa_cli",
+        "isExtraImport": true,
+        "detail": "src.kasa_cli",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "isExtraImport": true,
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "power_strip_ip",
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "isExtraImport": true,
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "socket",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "socket",
+        "description": "socket",
+        "detail": "socket",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "struct",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "struct",
+        "description": "struct",
+        "detail": "struct",
+        "documentation": {}
+    },
+    {
+        "label": "bytes",
+        "importPath": "builtins",
+        "description": "builtins",
+        "isExtraImport": true,
+        "detail": "builtins",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "KasaPowerStripCLI",
+        "kind": 6,
+        "importPath": "src.kasa_cli",
+        "description": "src.kasa_cli",
+        "peekOfCode": "class KasaPowerStripCLI:\n    \"\"\"CLI interface for controlling TP-Link HS300 Smart Power Strip.\"\"\"\n    def __init__(self, ip_address: str = \"192.168.50.137\"):\n        \"\"\"\n        Initialize the CLI with the power strip IP address.\n        Args:\n            ip_address: IP address of the power strip\n        \"\"\"\n        self.ip_address = ip_address\n        self.power_strip = None",
+        "detail": "src.kasa_cli",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "src.kasa_cli",
+        "description": "src.kasa_cli",
+        "peekOfCode": "def main():\n    \"\"\"Main entry point for the CLI application.\"\"\"\n    import argparse\n    parser = argparse.ArgumentParser(\n        description=\"CLI for controlling TP-Link HS300 Smart Power Strip\"\n    )\n    parser.add_argument(\n        \"--ip\",\n        default=\"192.168.50.137\",\n        help=\"IP address of the power strip (default: 192.168.2.3)\"",
+        "detail": "src.kasa_cli",
+        "documentation": {}
+    },
+    {
+        "label": "TestBasicSetup",
+        "kind": 6,
+        "importPath": "tests.test_basic",
+        "description": "tests.test_basic",
+        "peekOfCode": "class TestBasicSetup(unittest.TestCase):\n    \"\"\"Basic tests to verify the testing setup works.\"\"\"\n    def test_import_kasa_cli(self):\n        \"\"\"Test that the kasa_cli module can be imported.\"\"\"\n        try:\n            from src.kasa_cli import KasaPowerStripCLI\n            self.assertTrue(True, \"Successfully imported KasaPowerStripCLI\")\n        except ImportError as e:\n            self.fail(f\"Failed to import KasaPowerStripCLI: {e}\")\n    def test_import_kasa_smart_power_strip(self):",
+        "detail": "tests.test_basic",
+        "documentation": {}
+    },
+    {
+        "label": "TestKasaPowerStripCLI",
+        "kind": 6,
+        "importPath": "tests.test_kasa_cli",
+        "description": "tests.test_kasa_cli",
+        "peekOfCode": "class TestKasaPowerStripCLI(unittest.TestCase):\n    \"\"\"Test cases for KasaPowerStripCLI class.\"\"\"\n    def setUp(self):\n        \"\"\"Set up test fixtures.\"\"\"\n        self.cli = KasaPowerStripCLI(\"192.168.2.3\")\n    def test_init(self):\n        \"\"\"Test CLI initialization.\"\"\"\n        self.assertEqual(self.cli.ip_address, \"192.168.2.3\")\n        self.assertIsNone(self.cli.power_strip)\n        self.assertIsNone(self.cli.selected_outlet)",
+        "detail": "tests.test_kasa_cli",
+        "documentation": {}
+    },
+    {
+        "label": "get_power_strip",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:\n            power_strip = SmartPowerStrip(power_strip_ip)\n        except Exception as e:\n            print(f\"Failed to connect to power strip: {e}\")\n            return None\n    return power_strip",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_outlet_info",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_outlet_info() -> Dict:\n    \"\"\"Get outlet information from the power strip.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return {'error': 'Failed to connect to power strip'}\n    try:\n        sys_info = strip.get_system_info()\n        if not sys_info:\n            return {'error': 'Failed to get system info'}\n        children = sys_info['system']['get_sysinfo']['children']",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def index():\n    \"\"\"Main dashboard page.\"\"\"\n    return render_template('index.html')\n@app.route('/power-table')\ndef power_table():\n    \"\"\"Power table page showing all outlets' power draw.\"\"\"\n    return render_template('power_table.html')\n@app.route('/api/outlets', methods=['GET'])\ndef get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "power_table",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def power_table():\n    \"\"\"Power table page showing all outlets' power draw.\"\"\"\n    return render_template('power_table.html')\n@app.route('/api/outlets', methods=['GET'])\ndef get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"\n    info = get_outlet_info()\n    return jsonify(info)\n@app.route('/api/outlet/<int:outlet_num>/toggle', methods=['POST'])\ndef toggle_outlet(outlet_num):",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_outlets",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"\n    info = get_outlet_info()\n    return jsonify(info)\n@app.route('/api/outlet/<int:outlet_num>/toggle', methods=['POST'])\ndef toggle_outlet(outlet_num):\n    \"\"\"API endpoint to toggle a specific outlet.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "toggle_outlet",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def toggle_outlet(outlet_num):\n    \"\"\"API endpoint to toggle a specific outlet.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        data = request.get_json()\n        action = data.get('action', 'toggle')  # 'on', 'off', or 'toggle'\n        # Get current state\n        info = get_outlet_info()",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "toggle_all_outlets",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def toggle_all_outlets():\n    \"\"\"API endpoint to toggle all outlets.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        data = request.get_json()\n        action = data.get('action')  # 'on' or 'off'\n        if action not in ['on', 'off']:\n            return jsonify({'success': False, 'error': 'Invalid action. Must be \"on\" or \"off\"'}), 400",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_power_draw",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_all_power_draw():\n    \"\"\"API endpoint to get power draw information for all outlets.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        # Get outlet information to know how many outlets exist\n        info = get_outlet_info()\n        if 'error' in info:\n            return jsonify({'success': False, 'error': info['error']}), 500",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_power_draw",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_power_draw(outlet_num):\n    \"\"\"API endpoint to get power draw information for a specific outlet.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        energy_info = strip.get_realtime_energy_info(plug_num=outlet_num)\n        # Format the response\n        power_data = {}\n        # Standard format",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "app = Flask(__name__)\napp.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'\n# Global power strip instance\npower_strip: Optional[SmartPowerStrip] = None\npower_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')\ndef get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['SECRET_KEY']",
+        "kind": 5,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "app.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'\n# Global power strip instance\npower_strip: Optional[SmartPowerStrip] = None\npower_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')\ndef get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:\n            power_strip = SmartPowerStrip(power_strip_ip)",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "power_strip_ip",
+        "kind": 5,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "power_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')\ndef get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:\n            power_strip = SmartPowerStrip(power_strip_ip)\n        except Exception as e:\n            print(f\"Failed to connect to power strip: {e}\")\n            return None",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "SmartPowerStrip",
+        "kind": 6,
+        "importPath": "KasaSmartPowerStrip",
+        "description": "KasaSmartPowerStrip",
+        "peekOfCode": "class SmartPowerStrip:\n    def __init__(self, ip: str, device_id: Optional[str] = None,\n                 timeout: float = 2.0, protocol: str = 'tcp'):\n        \"\"\"\n        Initialize the power strip controller.\n        Args:\n            ip: IP address of the power strip\n            device_id: Device ID (auto-detected if not provided)\n            timeout: Connection timeout in seconds\n            protocol: Communication protocol ('tcp' or 'udp')",
+        "detail": "KasaSmartPowerStrip",
+        "documentation": {}
+    },
+    {
+        "label": "POWER_STRIP_IP",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "POWER_STRIP_IP = \"192.168.50.137\"\nPOWER_STRIP_TIMEOUT = 2.0\nPOWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'\n# CLI Configuration\nCLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\n# Outlet names are pulled directly from the power strip, set them using the mobile Kasa app\nDEFAULT_OUTLET_NAMES = {",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "POWER_STRIP_TIMEOUT",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "POWER_STRIP_TIMEOUT = 2.0\nPOWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'\n# CLI Configuration\nCLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\n# Outlet names are pulled directly from the power strip, set them using the mobile Kasa app\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "POWER_STRIP_PROTOCOL",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "POWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'\n# CLI Configuration\nCLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\n# Outlet names are pulled directly from the power strip, set them using the mobile Kasa app\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", ",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "CLI_REFRESH_DELAY",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "CLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\n# Outlet names are pulled directly from the power strip, set them using the mobile Kasa app\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "CLI_SHOW_EMOJIS",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "CLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\n# Outlet names are pulled directly from the power strip, set them using the mobile Kasa app\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_OUTLETS",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "MAX_OUTLETS = 6  # Maximum number of outlets on HS300\n# Outlet names are pulled directly from the power strip, set them using the mobile Kasa app\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",\n    6: \"Outlet 6\"\n}",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_OUTLET_NAMES",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "DEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",\n    6: \"Outlet 6\"\n}",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "debug_device_info",
+        "kind": 2,
+        "importPath": "debug_device_info",
+        "description": "debug_device_info",
+        "peekOfCode": "def debug_device_info():\n    \"\"\"Debug the device information and plug ID generation.\"\"\"\n    # IP address of your power strip (change this to match your setup)\n    ip_address = \"192.168.2.3\"  # Update this to your power strip's IP\n    print(\"Debugging device information and plug ID generation...\")\n    print(f\"Power strip IP: {ip_address}\")\n    print(\"=\" * 70)\n    try:\n        # Connect to the power strip\n        print(\"Connecting to power strip...\")",
+        "detail": "debug_device_info",
+        "documentation": {}
+    },
+    {
+        "label": "demo_basic_usage",
+        "kind": 2,
+        "importPath": "demo",
+        "description": "demo",
+        "peekOfCode": "def demo_basic_usage():\n    \"\"\"Demonstrate basic usage of the CLI.\"\"\"\n    print(\"=== TP-Link HS300 Power Strip CLI Demo ===\\n\")\n    # Create CLI instance\n    cli = KasaPowerStripCLI(\"192.168.2.3\")\n    # Try to connect\n    if not cli.connect():\n        print(\"Failed to connect to power strip. Please check:\")\n        print(\"1. Power strip is powered on\")\n        print(\"2. IP address is correct\")",
+        "detail": "demo",
+        "documentation": {}
+    },
+    {
+        "label": "demo_programmatic_control",
+        "kind": 2,
+        "importPath": "demo",
+        "description": "demo",
+        "peekOfCode": "def demo_programmatic_control():\n    \"\"\"Demonstrate programmatic control of outlets.\"\"\"\n    print(\"\\n=== Programmatic Control Demo ===\\n\")\n    cli = KasaPowerStripCLI(\"192.168.2.3\")\n    if not cli.connect():\n        print(\"Failed to connect. Skipping programmatic demo.\")\n        return\n    # Update outlet info\n    if not cli.update_outlet_info():\n        print(\"Failed to get outlet info. Skipping programmatic demo.\")",
+        "detail": "demo",
+        "documentation": {}
+    },
+    {
+        "label": "check_python_version",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def check_python_version():\n    \"\"\"Check if Python version is compatible.\"\"\"\n    if sys.version_info < (3, 7):\n        print(\"❌ Python 3.7 or higher is required.\")\n        print(f\"Current version: {sys.version}\")\n        return False\n    print(\n        f\"✅ Python {sys.version_info.major}.{sys.version_info.minor} detected\")\n    return True\ndef install_dependencies():",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "install_dependencies",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def install_dependencies():\n    \"\"\"Install required dependencies.\"\"\"\n    print(\"\\n📦 Installing dependencies...\")\n    try:\n        # Check if pip is available\n        subprocess.run([sys.executable, \"-m\", \"pip\", \"--version\"],\n                       check=True, capture_output=True)\n    except (subprocess.CalledProcessError, FileNotFoundError):\n        print(\"❌ pip not found. Please install pip first.\")\n        return False",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "create_config_file",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def create_config_file():\n    \"\"\"Create a configuration file if it doesn't exist.\"\"\"\n    config_content = '''#!/usr/bin/env python3\n\"\"\"\nConfiguration file for the TP-Link HS300 Power Strip CLI.\n\"\"\"\n# Power Strip Configuration\nPOWER_STRIP_IP = \"192.168.2.3\"  # Change this to your power strip's IP\nPOWER_STRIP_TIMEOUT = 2.0\nPOWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "make_executable",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def make_executable():\n    \"\"\"Make the CLI script executable.\"\"\"\n    cli_script = \"src/kasa_cli.py\"\n    if os.path.exists(cli_script):\n        try:\n            os.chmod(cli_script, 0o755)\n            print(\"✅ Made CLI script executable\")\n        except Exception as e:\n            print(f\"⚠️  Could not make script executable: {e}\")\n    else:",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "test_installation",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def test_installation():\n    \"\"\"Test the installation by importing the modules.\"\"\"\n    print(\"\\n🧪 Testing installation...\")\n    try:\n        # Test importing the CLI module\n        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))\n        from src.kasa_cli import KasaPowerStripCLI\n        print(\"✅ CLI module imported successfully\")\n        # Test importing the original library\n        from KasaSmartPowerStrip import SmartPowerStrip",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "show_usage_instructions",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def show_usage_instructions():\n    \"\"\"Show usage instructions.\"\"\"\n    print(\"\\n🎉 Installation completed successfully!\")\n    print(\"\\n📖 Usage Instructions:\")\n    print(\"=\" * 50)\n    print(\"1. Configure your power strip IP address:\")\n    print(\"   - Edit config.py and change POWER_STRIP_IP\")\n    print(\"   - Or use command line: --ip 192.168.2.3\")\n    print(\"\\n2. Run the CLI:\")\n    print(\"   python src/kasa_cli.py --ip 192.168.2.3\")",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def main():\n    \"\"\"Main installation function.\"\"\"\n    print(\"🚀 TP-Link HS300 Power Strip CLI Installer\")\n    print(\"=\" * 50)\n    # Check Python version\n    if not check_python_version():\n        return False\n    # Install dependencies\n    if not install_dependencies():\n        return False",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "POWER_STRIP_IP",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "POWER_STRIP_IP = \"192.168.2.3\"  # Change this to your power strip's IP\nPOWER_STRIP_TIMEOUT = 2.0\nPOWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'\n# CLI Configuration\nCLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "POWER_STRIP_TIMEOUT",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "POWER_STRIP_TIMEOUT = 2.0\nPOWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'\n# CLI Configuration\nCLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", ",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "POWER_STRIP_PROTOCOL",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "POWER_STRIP_PROTOCOL = \"tcp\"  # 'tcp' or 'udp'\n# CLI Configuration\nCLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "CLI_REFRESH_DELAY",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "CLI_REFRESH_DELAY = 1.0  # seconds\nCLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "CLI_SHOW_EMOJIS",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "CLI_SHOW_EMOJIS = True   # Enable/disable emoji indicators\n# Outlet Configuration\nMAX_OUTLETS = 6  # Maximum number of outlets on HS300\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",\n    6: \"Outlet 6\"",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_OUTLETS",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "MAX_OUTLETS = 6  # Maximum number of outlets on HS300\nDEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",\n    6: \"Outlet 6\"\n}\n'''",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_OUTLET_NAMES",
+        "kind": 5,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "DEFAULT_OUTLET_NAMES = {\n    1: \"Outlet 1\",\n    2: \"Outlet 2\", \n    3: \"Outlet 3\",\n    4: \"Outlet 4\",\n    5: \"Outlet 5\",\n    6: \"Outlet 6\"\n}\n'''\n    if not os.path.exists(\"config.py\"):",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "run_tests_with_uv",
+        "kind": 2,
+        "importPath": "run_tests",
+        "description": "run_tests",
+        "peekOfCode": "def run_tests_with_uv():\n    \"\"\"Run tests using uv.\"\"\"\n    try:\n        # Check if uv is available\n        result = subprocess.run([sys.executable, \"-m\", \"uv\", \"--version\"], \n                              capture_output=True, text=True)\n        if result.returncode != 0:\n            print(\"❌ uv not found. Please install uv first.\")\n            return False\n        print(\"🚀 Running tests with uv...\")",
+        "detail": "run_tests",
+        "documentation": {}
+    },
+    {
+        "label": "run_tests_with_pytest",
+        "kind": 2,
+        "importPath": "run_tests",
+        "description": "run_tests",
+        "peekOfCode": "def run_tests_with_pytest():\n    \"\"\"Run tests using pytest directly.\"\"\"\n    try:\n        print(\"🚀 Running tests with pytest...\")\n        # Run tests with pytest\n        cmd = [sys.executable, \"-m\", \"pytest\", \"tests/\", \"-v\"]\n        result = subprocess.run(cmd, cwd=Path(__file__).parent)\n        return result.returncode == 0\n    except FileNotFoundError:\n        print(\"❌ pytest not found. Please install pytest first.\")",
+        "detail": "run_tests",
+        "documentation": {}
+    },
+    {
+        "label": "run_tests_with_unittest",
+        "kind": 2,
+        "importPath": "run_tests",
+        "description": "run_tests",
+        "peekOfCode": "def run_tests_with_unittest():\n    \"\"\"Run tests using unittest directly.\"\"\"\n    try:\n        print(\"🚀 Running tests with unittest...\")\n        # Add the current directory to the path\n        sys.path.insert(0, str(Path(__file__).parent))\n        # Run tests with unittest\n        cmd = [sys.executable, \"-m\", \"unittest\", \"discover\", \"-s\", \"tests\", \"-v\"]\n        result = subprocess.run(cmd, cwd=Path(__file__).parent)\n        return result.returncode == 0",
+        "detail": "run_tests",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "run_tests",
+        "description": "run_tests",
+        "peekOfCode": "def main():\n    \"\"\"Main function to run tests.\"\"\"\n    print(\"🧪 Kasa HS300 CLI Test Runner\")\n    print(\"=\" * 40)\n    # Try different test runners in order of preference\n    runners = [\n        (\"uv\", run_tests_with_uv),\n        (\"pytest\", run_tests_with_pytest),\n        (\"unittest\", run_tests_with_unittest),\n    ]",
+        "detail": "run_tests",
+        "documentation": {}
+    }
+]

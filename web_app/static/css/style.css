@@ -530,6 +530,60 @@ body.compact-mode .power-table td:nth-child(6) {
     text-align: right;
 }
 
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.form-help {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+.form-actions .btn {
+    min-width: 100px;
+}
+
+#settings-message {
+    min-height: 20px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     header h1 {
@@ -547,6 +601,14 @@ body.compact-mode .power-table td:nth-child(6) {
     .btn {
         width: 100%;
         justify-content: center;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
     }
 }
 
