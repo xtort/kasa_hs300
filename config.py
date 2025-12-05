@@ -8,8 +8,8 @@ without changing the main application code.
 
 # Power Strip Configuration
 POWER_STRIP_IP = "192.168.50.137"
-POWER_STRIP_TIMEOUT = 2.0
-POWER_STRIP_PROTOCOL = "tcp"  # 'tcp' or 'udp'
+POWER_STRIP_TIMEOUT = 5.0
+POWER_STRIP_PROTOCOL = "udp"  # 'tcp' or 'udp'
 
 # CLI Configuration
 CLI_REFRESH_DELAY = 1.0  # seconds
