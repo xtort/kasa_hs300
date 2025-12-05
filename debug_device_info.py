@@ -17,13 +17,17 @@ except ImportError as e:
     print(f"Error importing KasaSmartPowerStrip: {e}")
     print("Make sure KasaSmartPowerStrip.py is in the same directory.")
     sys.exit(1)
+if len(sys.argv) > 1:
+    ip = sys.argv[1]
+else:
+    ip = "192.168.2.57"
 
-
-def debug_device_info():
+def debug_device_info(ip):
     """Debug the device information and plug ID generation."""
     
     # IP address of your power strip (change this to match your setup)
-    ip_address = "192.168.2.3"  # Update this to your power strip's IP
+    #ip_address = "192.168.2.3"  # Update this to your power strip's IP
+    ip_address = ip
     
     print("Debugging device information and plug ID generation...")
     print(f"Power strip IP: {ip_address}")
@@ -116,6 +120,6 @@ if __name__ == "__main__":
     print("TP-Link HS300 Power Strip - Device Info Debug Script")
     print("This script will help us understand the plug ID mismatch")
     
-    debug_device_info()
+    debug_device_info(ip)
     
     print("\nDebug script completed!")
