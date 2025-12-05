@@ -164,6 +164,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -227,15 +236,6 @@
         "importPath": "socket",
         "description": "socket",
         "detail": "socket",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -334,11 +334,47 @@
         "documentation": {}
     },
     {
-        "label": "get_power_strip",
+        "label": "load_web_config",
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:\n            power_strip = SmartPowerStrip(power_strip_ip)\n        except Exception as e:\n            print(f\"Failed to connect to power strip: {e}\")\n            return None\n    return power_strip",
+        "peekOfCode": "def load_web_config() -> Dict:\n    \"\"\"Load web app configuration from JSON file.\"\"\"\n    if os.path.exists(CONFIG_FILE):\n        try:\n            with open(CONFIG_FILE, 'r') as f:\n                return json.load(f)\n        except (json.JSONDecodeError, IOError) as e:\n            print(f\"Error reading config file: {e}\")\n            return {}\n    return {}",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "save_web_config",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def save_web_config(config_data: Dict) -> bool:\n    \"\"\"Save web app configuration to JSON file.\"\"\"\n    try:\n        with open(CONFIG_FILE, 'w') as f:\n            json.dump(config_data, f, indent=2)\n        return True\n    except IOError as e:\n        print(f\"Error writing config file: {e}\")\n        return False\ndef get_default_power_strip_config() -> Dict:",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_default_power_strip_config",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_default_power_strip_config() -> Dict:\n    \"\"\"Get default power strip configuration (for migration from old config).\"\"\"\n    web_config = load_web_config()\n    # Check if we have the new format (power_strips list)\n    if 'power_strips' in web_config and isinstance(web_config['power_strips'], list):\n        return web_config\n    # Migrate from old format (single power_strip_ip)\n    default_ip = web_config.get('power_strip_ip', getattr(config, 'POWER_STRIP_IP', '192.168.50.137'))\n    return {\n        'power_strips': [",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_power_strip_by_id",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_power_strip_by_id(power_strip_id: Optional[str] = None) -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection by ID.\"\"\"\n    config_data = get_default_power_strip_config()\n    power_strips = config_data.get('power_strips', [])\n    # If no ID provided, use active one\n    if not power_strip_id:\n        power_strip_id = config_data.get('active_power_strip_id')\n        if not power_strip_id and power_strips:\n            power_strip_id = power_strips[0].get('id')\n    if not power_strip_id:",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "reset_power_strip_connection",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def reset_power_strip_connection(power_strip_id: Optional[str] = None):\n    \"\"\"Reset the power strip connection (useful when IP changes).\"\"\"\n    if power_strip_id:\n        power_strip_cache.pop(power_strip_id, None)\n    else:\n        power_strip_cache.clear()\ndef get_outlet_info(power_strip_id: Optional[str] = None) -> Dict:\n    \"\"\"Get outlet information from the power strip.\"\"\"\n    strip = get_power_strip_by_id(power_strip_id)\n    if not strip:",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -347,7 +383,7 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def get_outlet_info() -> Dict:\n    \"\"\"Get outlet information from the power strip.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return {'error': 'Failed to connect to power strip'}\n    try:\n        sys_info = strip.get_system_info()\n        if not sys_info:\n            return {'error': 'Failed to get system info'}\n        children = sys_info['system']['get_sysinfo']['children']",
+        "peekOfCode": "def get_outlet_info(power_strip_id: Optional[str] = None) -> Dict:\n    \"\"\"Get outlet information from the power strip.\"\"\"\n    strip = get_power_strip_by_id(power_strip_id)\n    if not strip:\n        return {'error': 'Failed to connect to power strip'}\n    config_data = get_default_power_strip_config()\n    power_strips = config_data.get('power_strips', [])\n    # Find power strip config for IP address\n    if not power_strip_id:\n        power_strip_id = config_data.get('active_power_strip_id')",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -365,7 +401,7 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def power_table():\n    \"\"\"Power table page showing all outlets' power draw.\"\"\"\n    return render_template('power_table.html')\n@app.route('/api/outlets', methods=['GET'])\ndef get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"\n    info = get_outlet_info()\n    return jsonify(info)\n@app.route('/api/outlet/<int:outlet_num>/toggle', methods=['POST'])\ndef toggle_outlet(outlet_num):",
+        "peekOfCode": "def power_table():\n    \"\"\"Power table page showing all outlets' power draw.\"\"\"\n    return render_template('power_table.html')\n@app.route('/api/outlets', methods=['GET'])\ndef get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"\n    power_strip_id = request.args.get('power_strip_id')\n    info = get_outlet_info(power_strip_id)\n    return jsonify(info)\n@app.route('/api/outlet/<int:outlet_num>/toggle', methods=['POST'])",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -374,7 +410,7 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"\n    info = get_outlet_info()\n    return jsonify(info)\n@app.route('/api/outlet/<int:outlet_num>/toggle', methods=['POST'])\ndef toggle_outlet(outlet_num):\n    \"\"\"API endpoint to toggle a specific outlet.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500",
+        "peekOfCode": "def get_outlets():\n    \"\"\"API endpoint to get all outlet information.\"\"\"\n    power_strip_id = request.args.get('power_strip_id')\n    info = get_outlet_info(power_strip_id)\n    return jsonify(info)\n@app.route('/api/outlet/<int:outlet_num>/toggle', methods=['POST'])\ndef toggle_outlet(outlet_num):\n    \"\"\"API endpoint to toggle a specific outlet.\"\"\"\n    try:\n        data = request.get_json() or {}",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -383,7 +419,7 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def toggle_outlet(outlet_num):\n    \"\"\"API endpoint to toggle a specific outlet.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        data = request.get_json()\n        action = data.get('action', 'toggle')  # 'on', 'off', or 'toggle'\n        # Get current state\n        info = get_outlet_info()",
+        "peekOfCode": "def toggle_outlet(outlet_num):\n    \"\"\"API endpoint to toggle a specific outlet.\"\"\"\n    try:\n        data = request.get_json() or {}\n        power_strip_id = data.get('power_strip_id') or request.args.get('power_strip_id')\n        action = data.get('action', 'toggle')  # 'on', 'off', or 'toggle'\n        strip = get_power_strip_by_id(power_strip_id)\n        if not strip:\n            return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n        # Get current state",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -392,7 +428,7 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def toggle_all_outlets():\n    \"\"\"API endpoint to toggle all outlets.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        data = request.get_json()\n        action = data.get('action')  # 'on' or 'off'\n        if action not in ['on', 'off']:\n            return jsonify({'success': False, 'error': 'Invalid action. Must be \"on\" or \"off\"'}), 400",
+        "peekOfCode": "def toggle_all_outlets():\n    \"\"\"API endpoint to toggle all outlets.\"\"\"\n    try:\n        data = request.get_json() or {}\n        power_strip_id = data.get('power_strip_id') or request.args.get('power_strip_id')\n        action = data.get('action')  # 'on' or 'off'\n        if action not in ['on', 'off']:\n            return jsonify({'success': False, 'error': 'Invalid action. Must be \"on\" or \"off\"'}), 400\n        strip = get_power_strip_by_id(power_strip_id)\n        if not strip:",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -401,7 +437,7 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def get_all_power_draw():\n    \"\"\"API endpoint to get power draw information for all outlets.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        # Get outlet information to know how many outlets exist\n        info = get_outlet_info()\n        if 'error' in info:\n            return jsonify({'success': False, 'error': info['error']}), 500",
+        "peekOfCode": "def get_all_power_draw():\n    \"\"\"API endpoint to get power draw information for all outlets.\"\"\"\n    power_strip_id = request.args.get('power_strip_id')\n    strip = get_power_strip_by_id(power_strip_id)\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        # Get outlet information to know how many outlets exist\n        info = get_outlet_info(power_strip_id)\n        if 'error' in info:",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -410,7 +446,61 @@
         "kind": 2,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "def get_power_draw(outlet_num):\n    \"\"\"API endpoint to get power draw information for a specific outlet.\"\"\"\n    strip = get_power_strip()\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        energy_info = strip.get_realtime_energy_info(plug_num=outlet_num)\n        # Format the response\n        power_data = {}\n        # Standard format",
+        "peekOfCode": "def get_power_draw(outlet_num):\n    \"\"\"API endpoint to get power draw information for a specific outlet.\"\"\"\n    power_strip_id = request.args.get('power_strip_id')\n    strip = get_power_strip_by_id(power_strip_id)\n    if not strip:\n        return jsonify({'success': False, 'error': 'Failed to connect to power strip'}), 500\n    try:\n        energy_info = strip.get_realtime_energy_info(plug_num=outlet_num)\n        # Format the response\n        power_data = {}",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_config",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def get_config():\n    \"\"\"API endpoint to get current configuration.\"\"\"\n    config_data = get_default_power_strip_config()\n    return jsonify({\n        'success': True,\n        'power_strips': config_data.get('power_strips', []),\n        'active_power_strip_id': config_data.get('active_power_strip_id')\n    })\n@app.route('/api/config/power-strips', methods=['GET'])\ndef list_power_strips():",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "list_power_strips",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def list_power_strips():\n    \"\"\"API endpoint to list all power strips.\"\"\"\n    config_data = get_default_power_strip_config()\n    return jsonify({\n        'success': True,\n        'power_strips': config_data.get('power_strips', []),\n        'active_power_strip_id': config_data.get('active_power_strip_id')\n    })\n@app.route('/api/config/power-strips', methods=['POST'])\ndef add_power_strip():",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "add_power_strip",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def add_power_strip():\n    \"\"\"API endpoint to add a new power strip.\"\"\"\n    try:\n        data = request.get_json()\n        name = data.get('name', '').strip()\n        ip_address = data.get('ip_address', '').strip()\n        if not name:\n            return jsonify({'success': False, 'error': 'Name cannot be empty'}), 400\n        if not ip_address:\n            return jsonify({'success': False, 'error': 'IP address cannot be empty'}), 400",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "update_power_strip",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def update_power_strip(power_strip_id):\n    \"\"\"API endpoint to update a power strip.\"\"\"\n    try:\n        data = request.get_json()\n        name = data.get('name', '').strip()\n        ip_address = data.get('ip_address', '').strip()\n        config_data = get_default_power_strip_config()\n        power_strips = config_data.get('power_strips', [])\n        # Find power strip\n        power_strip_index = None",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "delete_power_strip",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def delete_power_strip(power_strip_id):\n    \"\"\"API endpoint to delete a power strip.\"\"\"\n    try:\n        config_data = get_default_power_strip_config()\n        power_strips = config_data.get('power_strips', [])\n        # Find and remove power strip\n        power_strips = [ps for ps in power_strips if ps.get('id') != power_strip_id]\n        if len(power_strips) == len(config_data.get('power_strips', [])):\n            return jsonify({'success': False, 'error': 'Power strip not found'}), 404\n        # If deleting active one, set first as active",
+        "detail": "web_app.app",
+        "documentation": {}
+    },
+    {
+        "label": "set_active_power_strip",
+        "kind": 2,
+        "importPath": "web_app.app",
+        "description": "web_app.app",
+        "peekOfCode": "def set_active_power_strip():\n    \"\"\"API endpoint to set the active power strip.\"\"\"\n    try:\n        data = request.get_json()\n        power_strip_id = data.get('power_strip_id')\n        if not power_strip_id:\n            return jsonify({'success': False, 'error': 'power_strip_id is required'}), 400\n        config_data = get_default_power_strip_config()\n        power_strips = config_data.get('power_strips', [])\n        # Verify power strip exists",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -419,7 +509,7 @@
         "kind": 5,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "app = Flask(__name__)\napp.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'\n# Global power strip instance\npower_strip: Optional[SmartPowerStrip] = None\npower_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')\ndef get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:",
+        "peekOfCode": "app = Flask(__name__)\napp.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'\n# Configuration file path\nCONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')\n# Global power strip connections cache (power_strip_id -> SmartPowerStrip instance)\npower_strip_cache: Dict[str, Optional[SmartPowerStrip]] = {}\ndef load_web_config() -> Dict:\n    \"\"\"Load web app configuration from JSON file.\"\"\"\n    if os.path.exists(CONFIG_FILE):\n        try:",
         "detail": "web_app.app",
         "documentation": {}
     },
@@ -428,16 +518,16 @@
         "kind": 5,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "app.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'\n# Global power strip instance\npower_strip: Optional[SmartPowerStrip] = None\npower_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')\ndef get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:\n            power_strip = SmartPowerStrip(power_strip_ip)",
+        "peekOfCode": "app.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'\n# Configuration file path\nCONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')\n# Global power strip connections cache (power_strip_id -> SmartPowerStrip instance)\npower_strip_cache: Dict[str, Optional[SmartPowerStrip]] = {}\ndef load_web_config() -> Dict:\n    \"\"\"Load web app configuration from JSON file.\"\"\"\n    if os.path.exists(CONFIG_FILE):\n        try:\n            with open(CONFIG_FILE, 'r') as f:",
         "detail": "web_app.app",
         "documentation": {}
     },
     {
-        "label": "power_strip_ip",
+        "label": "CONFIG_FILE",
         "kind": 5,
         "importPath": "web_app.app",
         "description": "web_app.app",
-        "peekOfCode": "power_strip_ip = getattr(config, 'POWER_STRIP_IP', '192.168.50.137')\ndef get_power_strip() -> Optional[SmartPowerStrip]:\n    \"\"\"Get or create power strip connection.\"\"\"\n    global power_strip\n    if power_strip is None:\n        try:\n            power_strip = SmartPowerStrip(power_strip_ip)\n        except Exception as e:\n            print(f\"Failed to connect to power strip: {e}\")\n            return None",
+        "peekOfCode": "CONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')\n# Global power strip connections cache (power_strip_id -> SmartPowerStrip instance)\npower_strip_cache: Dict[str, Optional[SmartPowerStrip]] = {}\ndef load_web_config() -> Dict:\n    \"\"\"Load web app configuration from JSON file.\"\"\"\n    if os.path.exists(CONFIG_FILE):\n        try:\n            with open(CONFIG_FILE, 'r') as f:\n                return json.load(f)\n        except (json.JSONDecodeError, IOError) as e:",
         "detail": "web_app.app",
         "documentation": {}
     },

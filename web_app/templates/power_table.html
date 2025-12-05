@@ -194,9 +194,13 @@
                 setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000);
             });
             
+            // Get active power strip ID
+            const powerStripId = window.PowerStripManager ? window.PowerStripManager.getActivePowerStripId() : null;
+            const url = powerStripId ? `/api/outlets/all/power?power_strip_id=${encodeURIComponent(powerStripId)}` : '/api/outlets/all/power';
+            
             // Race between fetch and timeout
             const response = await Promise.race([
-                fetch('/api/outlets/all/power'),
+                fetch(url),
                 timeoutPromise
             ]);
             

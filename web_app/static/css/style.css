@@ -54,6 +54,41 @@ header h1 {
     font-weight: 700;
 }
 
+.power-strip-selector-container {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.power-strip-selector-container label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.power-strip-selector {
+    padding: 8px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 200px;
+}
+
+.power-strip-selector:hover {
+    border-color: var(--primary-color);
+}
+
+.power-strip-selector:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
 .device-info {
     font-size: 1.1em;
     color: var(--text-secondary);
@@ -582,6 +617,53 @@ body.compact-mode .power-table td:nth-child(6) {
 
 #settings-message {
     min-height: 20px;
+}
+
+.power-strip-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+.power-strip-item.active {
+    border-color: var(--primary-color);
+    background: rgba(74, 144, 226, 0.1);
+}
+
+.power-strip-item-info {
+    flex: 1;
+}
+
+.power-strip-item-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.power-strip-item-ip {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+.power-strip-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.power-strip-item-actions .btn {
+    padding: 6px 12px;
+    font-size: 0.9em;
+}
+
+.power-strip-item.active .power-strip-item-name::after {
+    content: " (Active)";
+    color: var(--primary-color);
+    font-weight: normal;
 }
 
 /* Responsive Design */
