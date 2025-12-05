@@ -45,45 +45,23 @@
 
 <!-- Settings Modal -->
 <div id="settings-modal" class="modal">
-    <div class="modal-content" style="max-width: 700px;">
+    <div class="modal-content">
         <span class="close" id="settings-close">&times;</span>
-        <h2>Power Strip Settings</h2>
+        <h2>Settings</h2>
         <div id="settings-modal-body">
-            <div id="power-strips-list" style="margin-bottom: 20px;">
-                <h3>Power Strips</h3>
-                <div id="power-strips-container">
-                    <div class="loading-message">Loading power strips...</div>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="power-strip-ip">Power Strip IP Address:</label>
+                    <input type="text" id="power-strip-ip" name="power_strip_ip" 
+                           placeholder="192.168.50.137" required 
+                           pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$">
+                    <small class="form-help">Enter the IP address of your TP-Link HS300 power strip</small>
                 </div>
-                <button type="button" class="btn btn-primary" id="btn-add-power-strip" style="margin-top: 15px;">
-                    <span class="icon">➕</span> Add Power Strip
-                </button>
-            </div>
-            
-            <!-- Add/Edit Power Strip Form -->
-            <div id="power-strip-form-container" style="display: none;">
-                <h3 id="form-title">Add Power Strip</h3>
-                <form id="power-strip-form">
-                    <input type="hidden" id="form-power-strip-id" value="">
-                    <div class="form-group">
-                        <label for="form-power-strip-name">Name:</label>
-                        <input type="text" id="form-power-strip-name" name="name" 
-                               placeholder="e.g., Living Room Power Strip" required>
-                        <small class="form-help">A friendly name to identify this power strip</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-power-strip-ip">IP Address:</label>
-                        <input type="text" id="form-power-strip-ip" name="ip_address" 
-                               placeholder="192.168.50.137" required 
-                               pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$">
-                        <small class="form-help">Enter the IP address of your TP-Link HS300 power strip</small>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="form-submit-btn">Save</button>
-                        <button type="button" class="btn btn-secondary" id="form-cancel-btn">Cancel</button>
-                    </div>
-                </form>
-            </div>
-            
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" id="settings-cancel">Cancel</button>
+                </div>
+            </form>
             <div id="settings-message" style="margin-top: 15px;"></div>
         </div>
     </div>
@@ -217,156 +195,28 @@
             }
         };
         
-        // Settings modal - Power Strip Management
+        // Settings modal
         const settingsModal = document.getElementById('settings-modal');
         const settingsBtn = document.getElementById('btn-settings');
         const settingsCloseBtn = document.getElementById('settings-close');
-        const powerStripsContainer = document.getElementById('power-strips-container');
-        const powerStripFormContainer = document.getElementById('power-strip-form-container');
-        const powerStripForm = document.getElementById('power-strip-form');
-        const formCancelBtn = document.getElementById('form-cancel-btn');
-        const btnAddPowerStrip = document.getElementById('btn-add-power-strip');
+        const settingsCancelBtn = document.getElementById('settings-cancel');
+        const settingsForm = document.getElementById('settings-form');
         const settingsMessage = document.getElementById('settings-message');
-        
-        // Load and display power strips
-        async function loadPowerStripsList() {
-            if (!powerStripsContainer) return;
-            
-            try {
-                const response = await fetch('/api/config');
-                const data = await response.json();
-                
-                if (data.success) {
-                    const powerStrips = data.power_strips || [];
-                    const activeId = data.active_power_strip_id;
-                    
-                    powerStripsContainer.innerHTML = '';
-                    
-                    if (powerStrips.length === 0) {
-                        powerStripsContainer.innerHTML = '<p style="color: var(--text-secondary);">No power strips configured. Click "Add Power Strip" to get started.</p>';
-                        return;
-                    }
-                    
-                    powerStrips.forEach(ps => {
-                        const item = document.createElement('div');
-                        item.className = `power-strip-item ${ps.id === activeId ? 'active' : ''}`;
-                        item.innerHTML = `
-                            <div class="power-strip-item-info">
-                                <div class="power-strip-item-name">${escapeHtml(ps.name)}</div>
-                                <div class="power-strip-item-ip">${escapeHtml(ps.ip_address)}</div>
-                            </div>
-                            <div class="power-strip-item-actions">
-                                <button class="btn btn-info btn-set-active" data-id="${ps.id}" ${ps.id === activeId ? 'disabled' : ''}>
-                                    Set Active
-                                </button>
-                                <button class="btn btn-info btn-edit" data-id="${ps.id}">Edit</button>
-                                <button class="btn btn-secondary btn-delete" data-id="${ps.id}">Delete</button>
-                            </div>
-                        `;
-                        powerStripsContainer.appendChild(item);
-                    });
-                    
-                    // Add event listeners
-                    powerStripsContainer.querySelectorAll('.btn-set-active').forEach(btn => {
-                        btn.addEventListener('click', async function() {
-                            const id = this.getAttribute('data-id');
-                            await setActivePowerStrip(id);
-                        });
-                    });
-                    
-                    powerStripsContainer.querySelectorAll('.btn-edit').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const id = this.getAttribute('data-id');
-                            editPowerStrip(id, powerStrips);
-                        });
-                    });
-                    
-                    powerStripsContainer.querySelectorAll('.btn-delete').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const id = this.getAttribute('data-id');
-                            deletePowerStrip(id);
-                        });
-                    });
-                }
-            } catch (error) {
-                console.error('Error loading power strips:', error);
-                powerStripsContainer.innerHTML = `<div class="error-message">Error loading power strips: ${error.message}</div>`;
-            }
-        }
-        
-        // Set active power strip
-        async function setActivePowerStrip(id) {
-            try {
-                const response = await fetch('/api/config/active', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ power_strip_id: id })
-                });
-                
-                const data = await response.json();
-                if (data.success) {
-                    await loadPowerStripsList();
-                    if (window.PowerStripManager) {
-                        await window.PowerStripManager.loadPowerStrips();
-                        window.PowerStripManager.populateSelector();
-                    }
-                    if (typeof loadOutlets === 'function') {
-                        await loadOutlets();
-                    }
-                    showMessage('Active power strip updated', 'success');
-                } else {
-                    showMessage(`Error: ${data.error}`, 'error');
-                }
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
-        }
-        
-        // Edit power strip
-        function editPowerStrip(id, powerStrips) {
-            const ps = powerStrips.find(p => p.id === id);
-            if (!ps) return;
-            
-            document.getElementById('form-power-strip-id').value = ps.id;
-            document.getElementById('form-power-strip-name').value = ps.name;
-            document.getElementById('form-power-strip-ip').value = ps.ip_address;
-            document.getElementById('form-title').textContent = 'Edit Power Strip';
-            powerStripFormContainer.style.display = 'block';
-        }
-        
-        // Delete power strip
-        async function deletePowerStrip(id) {
-            if (!confirm('Are you sure you want to delete this power strip?')) return;
-            
-            try {
-                const response = await fetch(`/api/config/power-strips/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                const data = await response.json();
-                if (data.success) {
-                    await loadPowerStripsList();
-                    if (window.PowerStripManager) {
-                        await window.PowerStripManager.loadPowerStrips();
-                        window.PowerStripManager.populateSelector();
-                    }
-                    if (typeof loadOutlets === 'function') {
-                        await loadOutlets();
-                    }
-                    showMessage('Power strip deleted', 'success');
-                } else {
-                    showMessage(`Error: ${data.error}`, 'error');
-                }
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
-        }
         
         // Open settings modal
         if (settingsBtn && settingsModal) {
             settingsBtn.addEventListener('click', async function() {
-                await loadPowerStripsList();
-                powerStripFormContainer.style.display = 'none';
+                // Load current config
+                try {
+                    const response = await fetch('/api/config');
+                    const data = await response.json();
+                    if (data.success) {
+                        document.getElementById('power-strip-ip').value = data.power_strip_ip;
+                    }
+                } catch (error) {
+                    console.error('Error loading config:', error);
+                }
+                
                 settingsModal.style.display = 'block';
                 settingsMessage.innerHTML = '';
             });
@@ -376,9 +226,7 @@
         function closeSettingsModal() {
             if (settingsModal) {
                 settingsModal.style.display = 'none';
-                powerStripFormContainer.style.display = 'none';
                 settingsMessage.innerHTML = '';
-                powerStripForm.reset();
             }
         }
         
@@ -386,22 +234,8 @@
             settingsCloseBtn.onclick = closeSettingsModal;
         }
         
-        // Add power strip button
-        if (btnAddPowerStrip) {
-            btnAddPowerStrip.addEventListener('click', function() {
-                powerStripForm.reset();
-                document.getElementById('form-power-strip-id').value = '';
-                document.getElementById('form-title').textContent = 'Add Power Strip';
-                powerStripFormContainer.style.display = 'block';
-            });
-        }
-        
-        // Form cancel button
-        if (formCancelBtn) {
-            formCancelBtn.addEventListener('click', function() {
-                powerStripFormContainer.style.display = 'none';
-                powerStripForm.reset();
-            });
+        if (settingsCancelBtn) {
+            settingsCancelBtn.onclick = closeSettingsModal;
         }
         
         // Close modal when clicking outside
@@ -414,63 +248,50 @@
             }
         };
         
-        // Handle power strip form submission
-        if (powerStripForm) {
-            powerStripForm.addEventListener('submit', async function(e) {
+        // Handle settings form submission
+        if (settingsForm) {
+            settingsForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                const id = document.getElementById('form-power-strip-id').value;
-                const name = document.getElementById('form-power-strip-name').value.trim();
-                const ipAddress = document.getElementById('form-power-strip-ip').value.trim();
+                const ipInput = document.getElementById('power-strip-ip');
+                const ipAddress = ipInput.value.trim();
                 
+                // Clear previous messages
                 settingsMessage.innerHTML = '';
                 
-                const submitBtn = document.getElementById('form-submit-btn');
+                // Show loading state
+                const submitBtn = settingsForm.querySelector('button[type="submit"]');
                 const originalText = submitBtn.textContent;
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Saving...';
                 
                 try {
-                    let response;
-                    if (id) {
-                        // Update existing
-                        response = await fetch(`/api/config/power-strips/${id}`, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ name, ip_address: ipAddress })
-                        });
-                    } else {
-                        // Add new
-                        response = await fetch('/api/config/power-strips', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ name, ip_address: ipAddress })
-                        });
-                    }
+                    const response = await fetch('/api/config', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ power_strip_ip: ipAddress })
+                    });
                     
                     const data = await response.json();
                     
                     if (data.success) {
-                        settingsMessage.innerHTML = `<div class="success-message">${data.message || 'Power strip saved successfully!'}</div>`;
+                        settingsMessage.innerHTML = '<div class="success-message">Configuration saved successfully! Reloading outlets...</div>';
                         
+                        // Reload outlets after a short delay
                         setTimeout(async () => {
-                            await loadPowerStripsList();
-                            powerStripFormContainer.style.display = 'none';
-                            powerStripForm.reset();
-                            if (window.PowerStripManager) {
-                                await window.PowerStripManager.loadPowerStrips();
-                                window.PowerStripManager.populateSelector();
-                            }
-                            if (typeof loadOutlets === 'function') {
-                                await loadOutlets();
-                            }
+                            closeSettingsModal();
+                            await loadOutlets();
+                            showMessage('Configuration updated successfully', 'success');
                         }, 1000);
                     } else {
                         settingsMessage.innerHTML = `<div class="error-message">Error: ${data.error}</div>`;
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
                     }
                 } catch (error) {
                     settingsMessage.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
-                } finally {
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
                 }

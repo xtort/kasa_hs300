@@ -11,12 +11,6 @@
     <div class="container">
         <header>
             <h1>🔌 TP-Link HS300 Power Strip Controller</h1>
-            <div class="power-strip-selector-container">
-                <label for="power-strip-selector">Power Strip:</label>
-                <select id="power-strip-selector" class="power-strip-selector">
-                    <option value="">Loading...</option>
-                </select>
-            </div>
             <div class="device-info" id="device-info">
                 <span class="loading">Loading device information...</span>
             </div>
@@ -33,7 +27,6 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/compact-mode.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/power-strip-manager.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_scripts %}{% endblock %}
 </body>

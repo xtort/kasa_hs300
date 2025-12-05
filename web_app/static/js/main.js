@@ -29,13 +29,9 @@ async function loadOutlets() {
             setTimeout(() => reject(new Error('Request timeout after 10 seconds')), 10000);
         });
         
-        // Get active power strip ID
-        const powerStripId = window.PowerStripManager ? window.PowerStripManager.getActivePowerStripId() : null;
-        const url = powerStripId ? `/api/outlets?power_strip_id=${encodeURIComponent(powerStripId)}` : '/api/outlets';
-        
         // Race between fetch and timeout
         const response = await Promise.race([
-            fetch(url),
+            fetch('/api/outlets'),
             timeoutPromise
         ]);
         
@@ -138,13 +134,12 @@ async function toggleOutlet(outletNum, action) {
     buttons.forEach(btn => btn.disabled = true);
     
     try {
-        const powerStripId = window.PowerStripManager ? window.PowerStripManager.getActivePowerStripId() : null;
         const response = await fetch(`/api/outlet/${outletNum}/toggle`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ action: action, power_strip_id: powerStripId })
+            body: JSON.stringify({ action: action })
         });
         
         const data = await response.json();
@@ -174,13 +169,12 @@ async function toggleAllOutlets(action) {
     buttons.forEach(btn => btn.disabled = true);
     
     try {
-        const powerStripId = window.PowerStripManager ? window.PowerStripManager.getActivePowerStripId() : null;
         const response = await fetch('/api/outlets/all', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ action: action, power_strip_id: powerStripId })
+            body: JSON.stringify({ action: action })
         });
         
         const data = await response.json();
@@ -211,9 +205,7 @@ async function showPowerDraw(outletNum) {
     modalBody.innerHTML = '<div class="loading-message"><div class="spinner"></div><p>Loading power data...</p></div>';
     
     try {
-        const powerStripId = window.PowerStripManager ? window.PowerStripManager.getActivePowerStripId() : null;
-        const url = powerStripId ? `/api/outlet/${outletNum}/power?power_strip_id=${encodeURIComponent(powerStripId)}` : `/api/outlet/${outletNum}/power`;
-        const response = await fetch(url);
+        const response = await fetch(`/api/outlet/${outletNum}/power`);
         const data = await response.json();
         
         if (data.success) {
